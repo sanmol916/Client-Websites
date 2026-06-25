@@ -1,0 +1,14 @@
+Drop the client's images in THIS folder using these exact file names:
+
+  logo.png         -> header logo (transparent PNG, ~320x120)
+  hero.jpg         -> full-screen hero background (1920x1080) — a stunning bridal shot works best
+  about-1.jpg      -> about / artist image (800x960)
+  portfolio-1.jpg  -> portfolio image 1 (large feature, 900x900)
+  portfolio-2.jpg  -> portfolio image 2
+  portfolio-3.jpg  -> portfolio image 3
+  portfolio-4.jpg  -> portfolio image 4
+  portfolio-5.jpg  -> portfolio image 5
+  portfolio-6.jpg  -> portfolio image 6 (wide)
+
+No code changes needed — images appear automatically once added.
+Until then, labeled placeholders keep the layout intact.
