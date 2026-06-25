@@ -1,0 +1,14 @@
+Drop the client's images in THIS folder using these exact file names:
+
+  logo.png        -> header logo (transparent PNG, ~320x120)
+  hero.jpg        -> hero portrait frame (1000x1250)
+  about-1.jpg     -> about main image (800x800)
+  about-2.jpg     -> about small overlapping image (600x400)
+  gallery-1.jpg   -> lookbook image 1 (800x800)
+  gallery-2.jpg   -> lookbook image 2
+  gallery-3.jpg   -> lookbook image 3
+  gallery-4.jpg   -> lookbook image 4
+  gallery-5.jpg   -> lookbook image 5
+
+No code changes needed — images appear automatically once added.
+Until then, labeled placeholders keep the layout intact.
