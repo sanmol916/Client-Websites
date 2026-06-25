@@ -1,0 +1,15 @@
+Drop the client's images in THIS folder using these exact file names:
+
+  logo.png        -> header logo (transparent PNG, ~300x120)
+  hero.jpg        -> hero background (1920x1080)
+  about-1.jpg     -> about main photo (800x960)
+  about-2.jpg     -> about floating photo (600x400)
+  gallery-1.jpg   -> gallery image 1 (800x800)
+  gallery-2.jpg   -> gallery image 2
+  gallery-3.jpg   -> gallery image 3
+  gallery-4.jpg   -> gallery image 4
+  gallery-5.jpg   -> gallery image 5
+  gallery-6.jpg   -> gallery image 6
+
+No code changes needed — the images appear automatically once added.
+Until then, labeled placeholders keep the layout intact.
