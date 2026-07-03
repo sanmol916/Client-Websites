@@ -51,11 +51,33 @@ recommended sizes are in **IMAGE-LIST.md**.
 | Team | `founder-portrait.jpg`, `attorney-1.jpg`, `attorney-2.jpg`, `attorney-3.jpg` |
 | Contact map | `map.jpg` (or set a live map URL in Customizer) |
 
-## Editing text
-- **Page content templates** live in the theme files (`front-page.php`,
-  `page-about.php`, etc.). Edit text directly there, or ask your developer.
-- **Team names:** replace `Adv. [Name]` in `page-team.php`.
-- **Contact details:** use the Customizer (above) — no file editing needed.
+## Editing text & images — no code needed
+Everything on every page is editable from the WordPress dashboard:
+
+**Appearance → Customize → "Amar Legal — Page Content"**
+
+You'll see a section for each part of the site:
+- **Home ·** Hero, Who We Are, Practice Areas, Why Choose Us, Quote & CTA
+- **About ·** Banner & Story, Mission & Vision, Values, Why Choose Us & CTA
+- **Practice ·** Banner & Intro, Detailed Sections, More Cards & CTA
+- **Team ·** Banner & Leadership, Members, Commitment & CTA
+- **Contact ·** Banner & Intro
+
+For each item you can change the **heading, paragraph, button label, and image**.
+Images use the standard **WordPress Media Library** picker — click, upload or
+choose, done. Every change **previews live** on the right; click **Publish** to save.
+
+> The "Home" hero has a *Highlighted word* field — whatever word you type there is
+> shown in gold within the heading (default: "Integrity").
+
+**Contact details** (phone, email, address, hours, Google Map) are edited under
+**Appearance → Customize → "Amar Legal — Contact Details"** and appear on the
+Contact page and in the footer.
+
+### Why the page editor looks empty
+Opening **Pages → Home → Edit** shows an empty content box — that's expected. The
+design and text are managed in the **Customizer** (above), not the page editor, so
+the layout always stays intact and can't be broken by accident.
 
 ## Contact form
 The Contact page form works out of the box and emails the site admin address

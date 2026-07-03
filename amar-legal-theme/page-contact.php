@@ -10,7 +10,7 @@ $sent = isset( $_GET['sent'] ) ? sanitize_key( $_GET['sent'] ) : '';
 ?>
 
 <section class="page-banner">
-  <div class="page-banner__bg"><img src="<?php echo amar_legal_img( 'banner-contact.jpg' ); ?>" alt="Contact <?php bloginfo( 'name' ); ?>" /></div>
+  <div class="page-banner__bg"><img src="<?php echo amar_legal_pic( 'contact_banner_image' ); ?>" alt="Contact <?php bloginfo( 'name' ); ?>" /></div>
   <div class="wrap page-banner__inner">
     <h1>Get In Touch</h1>
     <div class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a> <span>/</span> Contact</div>
@@ -20,9 +20,9 @@ $sent = isset( $_GET['sent'] ) ? sanitize_key( $_GET['sent'] ) : '';
 <section class="section">
   <div class="wrap">
     <div class="section-head center">
-      <span class="eyebrow">We're Here to Help</span>
-      <h2>Schedule a Confidential Consultation</h2>
-      <p class="lead mx-auto">Tell us about your matter and our team will respond within one business day. All enquiries are treated in the strictest confidence.</p>
+      <span class="eyebrow"><?php amar_legal_e( 'contact_intro_eyebrow' ); ?></span>
+      <h2><?php amar_legal_e( 'contact_intro_title' ); ?></h2>
+      <p class="lead mx-auto"><?php amar_legal_e( 'contact_intro_subtitle' ); ?></p>
     </div>
 
     <div class="contact-grid">
@@ -90,7 +90,7 @@ $sent = isset( $_GET['sent'] ) ? sanitize_key( $_GET['sent'] ) : '';
       <?php if ( amar_legal_info( 'map' ) ) : ?>
         <iframe src="<?php echo esc_url( amar_legal_info( 'map' ) ); ?>" width="100%" height="420" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Office location"></iframe>
       <?php else : ?>
-        <img src="<?php echo amar_legal_img( 'map.jpg' ); ?>" alt="Map to <?php bloginfo( 'name' ); ?> office" />
+        <img src="<?php echo amar_legal_pic( 'contact_map_image' ); ?>" alt="Map to <?php bloginfo( 'name' ); ?> office" />
       <?php endif; ?>
     </div>
   </div>

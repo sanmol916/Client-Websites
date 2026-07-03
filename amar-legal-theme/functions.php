@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'AMAR_LEGAL_VERSION', '1.0.0' );
 
+// Editable content engine (Customizer-driven text & images).
+require_once get_template_directory() . '/inc/content-model.php';
+require_once get_template_directory() . '/inc/customizer-content.php';
+
 /**
  * Theme setup.
  */
