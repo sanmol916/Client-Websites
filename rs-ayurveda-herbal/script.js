@@ -54,8 +54,11 @@ function updatePrice(){
 }
 
 function setMainImage(src, emoji){
+  galleryMain.classList.remove("loaded");
   galleryMain.innerHTML = `
-    <img src="${src}" alt="Selected product" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+    <img src="${src}" alt="Selected product"
+         onload="this.closest('.img-placeholder').classList.add('loaded')"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';this.closest('.img-placeholder').classList.remove('loaded')" />
     <div class="ph-label"><span>${emoji||"📸"}</span>MAIN IMAGE<br /><small>${src}</small></div>`;
 }
 
@@ -328,6 +331,23 @@ reviewForm.addEventListener("submit", e=>{
 });
 
 renderReviews();
+
+/* ========== IMAGE PLACEHOLDERS: hide label once a real image loads ========== */
+(function initImagePlaceholders(){
+  // section/product/benefit/step images
+  document.querySelectorAll(".img-placeholder img").forEach(img=>{
+    const mark = () => { const box = img.closest(".img-placeholder"); if(box && img.naturalWidth > 0) box.classList.add("loaded"); };
+    if(img.complete) mark();
+    img.addEventListener("load", mark);
+  });
+  // logo images: hide the "RS" text fallback when the real logo loads
+  document.querySelectorAll(".logo-img").forEach(img=>{
+    const fb = img.nextElementSibling;
+    const ok = () => { if(img.naturalWidth > 0 && fb) fb.style.display = "none"; };
+    if(img.complete) ok();
+    img.addEventListener("load", ok);
+  });
+})();
 
 /* ========== helper ========== */
 function esc(str){

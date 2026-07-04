@@ -55,8 +55,8 @@ img{max-width:100%;display:block}
   flex-shrink:0;
 }
 .logo-box.small{width:44px;height:44px;background:#1c1c1c;border-color:var(--red)}
-.logo-img{width:100%;height:100%;object-fit:cover}
-.logo-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1}
+.logo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2}
+.logo-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1}
 .logo-rs{font-family:'Oswald';font-weight:700;color:var(--red);font-size:1.2rem}
 .logo-sub{font-size:.44rem;color:var(--muted);letter-spacing:1px;margin-top:2px}
 .footer .logo-rs{color:var(--red)}
@@ -103,7 +103,12 @@ img{max-width:100%;display:block}
   border:2px dashed var(--red);
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
-.img-placeholder img{width:100%;height:100%;object-fit:cover}
+.img-placeholder img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+/* once a real image loads, drop the dashed placeholder styling & hide the label */
+.img-placeholder.loaded{border:none;background:transparent}
+.img-placeholder.loaded .ph-label,.img-placeholder.loaded .ph-mini{display:none}
+/* product packshots show fully (no crop); photos fill */
+.gallery-main-ph img,.thumb img{object-fit:contain}
 .ph-label{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9a9a9a;font-weight:700;text-align:center;font-size:.9rem;letter-spacing:1px;padding:8px}
 .ph-label span{font-size:2.4rem;margin-bottom:6px}
 .ph-label small{color:#bbb;font-weight:400;font-size:.66rem;margin-top:4px}
