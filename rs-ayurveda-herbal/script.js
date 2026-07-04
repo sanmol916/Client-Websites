@@ -1,142 +1,361 @@
 /* ============================================================
-   R.S Ayurveda Herbal - Order flow
-   Flow: Buy Now  ->  Order Form  ->  WhatsApp confirm button
-   No COD / No online payment gateway. Order is placed via WhatsApp.
+   R.S Ayurveda Herbal - Horse Power Gold Max
+   Flow: Choose variant + pack -> Buy Now -> Order Form -> WhatsApp
+   No COD / No online payment gateway. Order placed via WhatsApp.
    ============================================================ */
 
 // ---- CONFIG ----
-const WHATSAPP_NUMBER = "919582771432"; // country code 91 + 9582771432
+const WHATSAPP_NUMBER = "919582771432"; // 91 + 9582771432
+
+// ---- PRODUCT DATA (edit prices/packs here) ----
+const PRODUCTS = {
+  Oil: {
+    label: "Horse Power Gold Max Oil",
+    img: "assets/oil.png",
+    packs: [
+      { qty: "1 Bottle",  price: 699,  old: 1299, tag: "TRY IT" },
+      { qty: "2 Bottles", price: 1299, old: 2598, tag: "POPULAR" },
+      { qty: "3 Bottles", price: 1799, old: 3897, tag: "BEST VALUE" },
+    ],
+  },
+  Capsules: {
+    label: "Horse Power Gold Max Capsules",
+    img: "assets/capsule.png",
+    packs: [
+      { qty: "30 Caps",  price: 899,  old: 1599, tag: "TRY IT" },
+      { qty: "60 Caps",  price: 1599, old: 3198, tag: "POPULAR" },
+      { qty: "90 Caps",  price: 2199, old: 4797, tag: "BEST VALUE" },
+    ],
+  },
+};
+
+let selectedType = "Oil";
+let selectedPackIndex = 0;
+
+const rupee = n => "₹" + n.toLocaleString("en-IN");
 
 // ---- ELEMENTS ----
-const modal        = document.getElementById("modal");
-const modalClose   = document.getElementById("modalClose");
-const stepForm     = document.getElementById("stepForm");
-const stepConfirm  = document.getElementById("stepConfirm");
-const orderForm    = document.getElementById("orderForm");
-const selProduct   = document.getElementById("selProduct");
-const selPrice     = document.getElementById("selPrice");
-const orderSummary = document.getElementById("orderSummary");
-const waSend       = document.getElementById("waSend");
-const backToForm   = document.getElementById("backToForm");
+const $ = id => document.getElementById(id);
+const packGrid   = $("packGrid");
+const psPrice    = $("psPrice");
+const psOld      = $("psOld");
+const psSave     = $("psSave");
+const galleryMain= $("galleryMain");
+const mbPrice    = $("mbPrice");
+const mbType     = $("mbType");
 
-let currentOrder = { product: "", price: "" };
-
-// ---- YEAR ----
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// ---- OPEN MODAL ON BUY NOW ----
-document.querySelectorAll("[data-buy]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    currentOrder.product = btn.getAttribute("data-buy");
-    currentOrder.price   = btn.getAttribute("data-price") || "";
-    selProduct.textContent = currentOrder.product;
-    selPrice.textContent   = currentOrder.price;
-    showStep("form");
-    openModal();
+/* ========== VARIANT + PACK SELECTION ========== */
+function renderPacks(){
+  const packs = PRODUCTS[selectedType].packs;
+  packGrid.innerHTML = packs.map((p,i)=>`
+    <div class="pack-card ${i===selectedPackIndex?"active":""}" data-idx="${i}">
+      ${p.tag?`<span class="pk-tag">${p.tag}</span>`:""}
+      <div class="pk-qty">${p.qty}</div>
+      <div class="pk-price">${rupee(p.price)}</div>
+      <div class="pk-old">${rupee(p.old)}</div>
+    </div>
+  `).join("");
+  packGrid.querySelectorAll(".pack-card").forEach(card=>{
+    card.addEventListener("click",()=>{
+      selectedPackIndex = +card.dataset.idx;
+      renderPacks();
+      updatePrice();
+    });
+  });
+}
+
+function updatePrice(){
+  const p = PRODUCTS[selectedType].packs[selectedPackIndex];
+  const save = p.old - p.price;
+  psPrice.textContent = rupee(p.price);
+  psOld.textContent   = rupee(p.old);
+  psSave.textContent  = "You save " + rupee(save);
+  mbPrice.textContent = rupee(p.price);
+  mbType.textContent  = selectedType + " • " + p.qty;
+}
+
+function setMainImage(src, emoji){
+  galleryMain.innerHTML = `
+    <img src="${src}" alt="Selected product" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+    <div class="ph-label"><span>${emoji||"📸"}</span>MAIN IMAGE<br /><small>${src}</small></div>`;
+}
+
+// type toggle
+document.querySelectorAll(".type-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".type-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedType = btn.dataset.type;
+    selectedPackIndex = 0;
+    setMainImage(btn.dataset.img, selectedType==="Oil"?"🧴":"💊");
+    // sync gallery thumbs active
+    document.querySelectorAll(".thumb").forEach(t=>t.classList.toggle("active", t.dataset.img===btn.dataset.img));
+    renderPacks();
+    updatePrice();
   });
 });
 
-// ---- MODAL CONTROLS ----
-function openModal(){
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
+// gallery thumbs
+document.querySelectorAll(".thumb").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".thumb").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");
+    setMainImage(t.dataset.img);
+  });
+});
+
+renderPacks();
+updatePrice();
+
+/* ========== URGENCY BADGES (advertisement) ========== */
+(function urgency(){
+  const lv = $("liveVisitors"), sr = $("soldRecent");
+  let visitors = 2100 + Math.floor(Math.random()*400);
+  let sold = 140 + Math.floor(Math.random()*40);
+  lv.textContent = visitors.toLocaleString("en-IN");
+  sr.textContent = sold;
+  setInterval(()=>{
+    visitors += Math.floor(Math.random()*7)-3;
+    if(visitors < 1800) visitors = 1800;
+    lv.textContent = visitors.toLocaleString("en-IN");
+  }, 3000);
+  setInterval(()=>{ sold += Math.random()>.6?1:0; sr.textContent = sold; }, 9000);
+})();
+
+/* ========== NAV / HAMBURGER ========== */
+const nav = $("nav"), hamburger = $("hamburger");
+hamburger.addEventListener("click",()=>nav.classList.toggle("open"));
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
+
+/* ========== FAQ ACCORDION ========== */
+document.querySelectorAll(".faq-q").forEach(q=>{
+  q.addEventListener("click",()=>{
+    const item = q.closest(".faq-item");
+    const ans = item.querySelector(".faq-a");
+    const isOpen = item.classList.contains("open");
+    document.querySelectorAll(".faq-item").forEach(i=>{i.classList.remove("open");i.querySelector(".faq-a").style.maxHeight=null;});
+    if(!isOpen){ item.classList.add("open"); ans.style.maxHeight = ans.scrollHeight + "px"; }
+  });
+});
+
+/* ========== ORDER MODAL FLOW ========== */
+const modal       = $("modal");
+const modalClose  = $("modalClose");
+const stepForm    = $("stepForm");
+const stepConfirm = $("stepConfirm");
+const orderForm   = $("orderForm");
+const selProduct  = $("selProduct");
+const selPrice    = $("selPrice");
+const orderSummary= $("orderSummary");
+const waSend      = $("waSend");
+const backToForm  = $("backToForm");
+
+let currentOrder = { product:"", price:"" };
+
+function openBuy(){
+  const p = PRODUCTS[selectedType].packs[selectedPackIndex];
+  currentOrder.product = PRODUCTS[selectedType].label + " (" + p.qty + ")";
+  currentOrder.price   = rupee(p.price);
+  selProduct.textContent = currentOrder.product;
+  selPrice.textContent   = currentOrder.price;
+  showStep("form");
+  openModal();
 }
-function closeModal(){
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden","true");
-  document.body.style.overflow = "";
-}
+$("buyNowBtn").addEventListener("click", openBuy);
+$("mobileBuyBtn").addEventListener("click", openBuy);
+
+function openModal(){ modal.classList.add("open"); modal.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; }
+function closeModal(){ modal.classList.remove("open"); modal.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
 modalClose.addEventListener("click", closeModal);
-modal.addEventListener("click", e => { if(e.target === modal) closeModal(); });
-document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+modal.addEventListener("click", e=>{ if(e.target===modal) closeModal(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
 
 function showStep(which){
-  if(which === "form"){ stepForm.classList.remove("hidden"); stepConfirm.classList.add("hidden"); }
+  if(which==="form"){ stepForm.classList.remove("hidden"); stepConfirm.classList.add("hidden"); }
   else { stepForm.classList.add("hidden"); stepConfirm.classList.remove("hidden"); }
 }
-backToForm.addEventListener("click", () => showStep("form"));
+backToForm.addEventListener("click",()=>showStep("form"));
 
-// ---- VALIDATION ----
-function setError(id, msg){
-  const field = document.getElementById(id).closest(".field");
-  const err   = field.querySelector(".err");
-  if(msg){ field.classList.add("invalid"); err.textContent = msg; }
-  else { field.classList.remove("invalid"); err.textContent = ""; }
+// validation
+function setError(id,msg){
+  const field = $(id).closest(".field");
+  const err = field.querySelector(".err");
+  if(msg){ field.classList.add("invalid"); err.textContent=msg; } else { field.classList.remove("invalid"); err.textContent=""; }
 }
-
-function validateForm(data){
-  let ok = true;
-  if(!data.name || data.name.trim().length < 2){ setError("fName","Please enter your name"); ok=false; } else setError("fName");
-  if(!/^[6-9]\d{9}$/.test(data.mobile)){ setError("fMobile","Enter a valid 10-digit mobile number"); ok=false; } else setError("fMobile");
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){ setError("fEmail","Enter a valid email address"); ok=false; } else setError("fEmail");
-  if(!data.address || data.address.trim().length < 8){ setError("fAddress","Please enter your full address"); ok=false; } else setError("fAddress");
-  if(!/^\d{6}$/.test(data.pin)){ setError("fPin","Enter a valid 6-digit pin code"); ok=false; } else setError("fPin");
+function validateForm(d){
+  let ok=true;
+  if(!d.name || d.name.trim().length<2){ setError("fName","Please enter your name"); ok=false; } else setError("fName");
+  if(!/^[6-9]\d{9}$/.test(d.mobile)){ setError("fMobile","Enter a valid 10-digit mobile number"); ok=false; } else setError("fMobile");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){ setError("fEmail","Enter a valid email address"); ok=false; } else setError("fEmail");
+  if(!d.address || d.address.trim().length<8){ setError("fAddress","Please enter your full address"); ok=false; } else setError("fAddress");
+  if(!/^\d{6}$/.test(d.pin)){ setError("fPin","Enter a valid 6-digit pin code"); ok=false; } else setError("fPin");
   return ok;
 }
+["fMobile","fPin"].forEach(id=>{ $(id).addEventListener("input",e=>{ e.target.value=e.target.value.replace(/\D/g,""); }); });
 
-// only allow digits in mobile & pin
-["fMobile","fPin"].forEach(id => {
-  document.getElementById(id).addEventListener("input", e => {
-    e.target.value = e.target.value.replace(/\D/g,"");
-  });
-});
-
-// ---- SUBMIT FORM -> BUILD WHATSAPP MESSAGE ----
-orderForm.addEventListener("submit", e => {
+orderForm.addEventListener("submit", e=>{
   e.preventDefault();
-  const data = {
-    name:    document.getElementById("fName").value.trim(),
-    mobile:  document.getElementById("fMobile").value.trim(),
-    email:   document.getElementById("fEmail").value.trim(),
-    address: document.getElementById("fAddress").value.trim(),
-    pin:     document.getElementById("fPin").value.trim(),
+  const d = {
+    name:$("fName").value.trim(), mobile:$("fMobile").value.trim(), email:$("fEmail").value.trim(),
+    address:$("fAddress").value.trim(), pin:$("fPin").value.trim(),
   };
+  if(!validateForm(d)) return;
 
-  if(!validateForm(data)) return;
-
-  // Build order summary shown in confirm step
   orderSummary.innerHTML = `
     <div class="row"><span class="k">Product</span><span class="v">${esc(currentOrder.product)} ${esc(currentOrder.price)}</span></div>
-    <div class="row"><span class="k">Name</span><span class="v">${esc(data.name)}</span></div>
-    <div class="row"><span class="k">Mobile</span><span class="v">${esc(data.mobile)}</span></div>
-    <div class="row"><span class="k">Email</span><span class="v">${esc(data.email)}</span></div>
-    <div class="row"><span class="k">Address</span><span class="v">${esc(data.address)}</span></div>
-    <div class="row"><span class="k">Pin Code</span><span class="v">${esc(data.pin)}</span></div>
-  `;
+    <div class="row"><span class="k">Name</span><span class="v">${esc(d.name)}</span></div>
+    <div class="row"><span class="k">Mobile</span><span class="v">${esc(d.mobile)}</span></div>
+    <div class="row"><span class="k">Email</span><span class="v">${esc(d.email)}</span></div>
+    <div class="row"><span class="k">Address</span><span class="v">${esc(d.address)}</span></div>
+    <div class="row"><span class="k">Pin Code</span><span class="v">${esc(d.pin)}</span></div>`;
 
-  // Build WhatsApp message
   const message =
 `*NEW ORDER - R.S Ayurveda Herbal*
 --------------------------------
 *Product:* ${currentOrder.product} ${currentOrder.price}
 
-*Name:* ${data.name}
-*Mobile:* ${data.mobile}
-*Email:* ${data.email}
-*Address:* ${data.address}
-*Pin Code:* ${data.pin}
+*Name:* ${d.name}
+*Mobile:* ${d.mobile}
+*Email:* ${d.email}
+*Address:* ${d.address}
+*Pin Code:* ${d.pin}
 --------------------------------
 Please confirm my order. Thank you!`;
 
-  waSend.setAttribute("href", `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`);
-  waSend.setAttribute("target","_blank");
-  waSend.setAttribute("rel","noopener");
-
+  waSend.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  waSend.target = "_blank"; waSend.rel = "noopener";
   showStep("confirm");
 });
 
-// ---- GENERAL WHATSAPP LINKS (float + footer, no order details) ----
-const generalMsg = encodeURIComponent("Hi R.S Ayurveda Herbal, I would like to know more about Horse Power Gold Max.");
-const generalLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${generalMsg}`;
-["waFloat","footerWa"].forEach(id => {
-  const el = document.getElementById(id);
-  if(el){ el.setAttribute("href", generalLink); el.setAttribute("target","_blank"); el.setAttribute("rel","noopener"); }
+/* ========== GENERAL WHATSAPP LINKS ========== */
+const generalLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi R.S Ayurveda Herbal, I would like to know more about Horse Power Gold Max.")}`;
+["waFloat","footerWa"].forEach(id=>{ const el=$(id); if(el){ el.href=generalLink; el.target="_blank"; el.rel="noopener"; } });
+
+/* ============================================================
+   REVIEW SYSTEM  (seed reviews + user reviews in localStorage)
+   ============================================================ */
+const STORAGE_KEY = "rs_ayurveda_reviews";
+
+const SEED_REVIEWS = [
+  { name:"Akbar",   rating:5, title:"Good value", body:"Good valuable product. Feeling more energetic. Will order again.", date:"2026-06-20", verified:true },
+  { name:"Rakesh S.",rating:5, title:"Really works", body:"Using the capsules for a month, noticed good stamina improvement.", date:"2026-06-14", verified:true },
+  { name:"Imran",   rating:4, title:"Nice", body:"Packaging was discreet and delivery fast. Product is genuine.", date:"2026-06-08", verified:true },
+  { name:"Deepak",  rating:5, title:"Highly recommend", body:"Ordering on WhatsApp was super easy. No payment hassle. Happy customer.", date:"2026-05-30", verified:true },
+  { name:"Sunil K.",rating:5, title:"Best ayurvedic", body:"Tried the oil variant, results are good. Feeling more confident.", date:"2026-05-22", verified:true },
+  { name:"Vikas",   rating:4, title:"Value for money", body:"Good product for the price. Genuine ayurvedic ingredients.", date:"2026-05-11", verified:true },
+];
+
+// baseline stats to match reference-style credibility
+const BASE_STATS = { 5:235, 4:13, 3:8, 2:4, 1:1 };
+
+function loadUserReviews(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveUserReviews(list){ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+
+function allReviews(){
+  // newest user reviews first, then seed
+  return [...loadUserReviews().slice().reverse(), ...SEED_REVIEWS];
+}
+
+function computeStats(){
+  const counts = {5:BASE_STATS[5],4:BASE_STATS[4],3:BASE_STATS[3],2:BASE_STATS[2],1:BASE_STATS[1]};
+  // add user reviews to counts
+  loadUserReviews().forEach(r=>{ counts[r.rating] = (counts[r.rating]||0)+1; });
+  let total=0, sum=0;
+  for(let s=1;s<=5;s++){ total+=counts[s]; sum+=s*counts[s]; }
+  const avg = total ? (sum/total) : 0;
+  return { counts, total, avg };
+}
+
+function starStr(n){ return "★★★★★".slice(0,n) + "☆☆☆☆☆".slice(0,5-n); }
+
+function renderReviews(){
+  const { counts, total, avg } = computeStats();
+  $("rsAvg").textContent = avg.toFixed(2);
+  $("rsCount").textContent = total.toLocaleString("en-IN");
+  $("rsStars").textContent = starStr(Math.round(avg));
+  $("avgRatingTop").textContent = avg.toFixed(1);
+  $("reviewCountTop").textContent = total.toLocaleString("en-IN");
+
+  // bars
+  $("rsBars").innerHTML = [5,4,3,2,1].map(s=>{
+    const pct = total ? Math.round(counts[s]/total*100) : 0;
+    return `<div class="rs-bar-row">
+      <span class="lbl">${s} ★</span>
+      <span class="rs-bar-track"><span class="rs-bar-fill" style="width:${pct}%"></span></span>
+      <span class="cnt">${counts[s]}</span>
+    </div>`;
+  }).join("");
+
+  // list
+  const list = allReviews();
+  $("reviewList").innerHTML = list.map(r=>`
+    <div class="review-card">
+      <div class="review-head">
+        <div class="review-avatar">${esc((r.name||"?").charAt(0).toUpperCase())}</div>
+        <div>
+          <div class="review-name">${esc(r.name)} ${r.verified?'<span class="verified">Verified</span>':""}</div>
+          <div class="review-date">${formatDate(r.date)}</div>
+        </div>
+      </div>
+      <div class="review-stars">${starStr(r.rating)}</div>
+      ${r.title?`<div class="review-title">${esc(r.title)}</div>`:""}
+      <div class="review-body">${esc(r.body)}</div>
+    </div>`).join("");
+}
+
+function formatDate(d){
+  try { return new Date(d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}); }
+  catch(e){ return d; }
+}
+
+// write-a-review UI
+const reviewForm = $("reviewForm");
+const writeReviewBtn = $("writeReviewBtn");
+const cancelReview = $("cancelReview");
+const starInput = $("starInput");
+let chosenRating = 0;
+
+writeReviewBtn.addEventListener("click",()=>{
+  reviewForm.classList.toggle("hidden");
+  if(!reviewForm.classList.contains("hidden")) reviewForm.scrollIntoView({behavior:"smooth",block:"center"});
+});
+cancelReview.addEventListener("click",()=>reviewForm.classList.add("hidden"));
+
+starInput.querySelectorAll("span").forEach(star=>{
+  star.addEventListener("mouseenter",()=>paintStars(+star.dataset.val));
+  star.addEventListener("click",()=>{ chosenRating=+star.dataset.val; paintStars(chosenRating); $("ratingErr").textContent=""; });
+});
+starInput.addEventListener("mouseleave",()=>paintStars(chosenRating));
+function paintStars(n){ starInput.querySelectorAll("span").forEach(s=>s.classList.toggle("on", +s.dataset.val<=n)); }
+
+reviewForm.addEventListener("submit", e=>{
+  e.preventDefault();
+  const name = $("rvName").value.trim();
+  const title= $("rvTitle").value.trim();
+  const text = $("rvText").value.trim();
+  if(!chosenRating){ $("ratingErr").textContent="Please select a star rating"; $("ratingErr").style.display="block"; return; }
+  if(name.length<2 || text.length<3){ alert("Please enter your name and review text."); return; }
+
+  const list = loadUserReviews();
+  list.push({ name, rating:chosenRating, title, body:text, date:new Date().toISOString().slice(0,10), verified:false });
+  saveUserReviews(list);
+
+  // reset
+  $("rvName").value=""; $("rvTitle").value=""; $("rvText").value="";
+  chosenRating=0; paintStars(0);
+  reviewForm.classList.add("hidden");
+  renderReviews();
+  $("reviews").scrollIntoView({behavior:"smooth"});
 });
 
-// ---- helper: escape HTML ----
+renderReviews();
+
+/* ========== helper ========== */
 function esc(str){
-  return String(str)
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }

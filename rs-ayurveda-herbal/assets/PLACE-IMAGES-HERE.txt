@@ -2,14 +2,32 @@ IMAGE PLACEHOLDERS - R.S Ayurveda Herbal
 ========================================
 
 Drop your images in this "assets" folder using these EXACT file names.
-The website will automatically show them (and hides the dashed placeholder box).
+The website automatically shows them and hides the dashed placeholder box.
+No code changes needed - just add the files with the names below (lowercase).
 
-1. logo.png    -> Your brand logo (shown in header & footer). Square works best.
-2. hero.png    -> Main hero product image at the top of the page.
-3. oil.png     -> Horse Power Gold Max OIL product image.
-4. capsule.png -> Horse Power Gold Max CAPSULES product image.
+BRANDING
+  logo.png       -> Brand logo (header & footer). Square works best.
+  hero.png       -> Main hero banner image (top of page).
+
+PRODUCTS
+  oil.png        -> Horse Power Gold Max OIL product image.
+  capsule.png    -> Horse Power Gold Max CAPSULES product image.
+
+PRODUCT GALLERY (thumbnails under the main image)
+  gallery-1.png  -> Extra product / lifestyle photo.
+  gallery-2.png  -> Extra product / ingredients photo.
+
+BENEFITS SECTION
+  benefit-1.png  -> "Supports Daily Strength" image.
+  benefit-2.png  -> "Boosts Stamina" image.
+  benefit-3.png  -> "Natural Vitality" image.
+
+HOW TO USE / PROCESS SECTION
+  step-1.png     -> Step 1 image.
+  step-2.png     -> Step 2 image.
+  step-3.png     -> Step 3 image.
 
 Notes:
-- Until you add a file, a styled placeholder box is shown in its place.
 - Recommended format: PNG or JPG. Keep file names lowercase.
-- No code changes needed - just add the files with the names above.
+- Until a file is added, a labeled placeholder box is shown in its place.
+- Prices, packs and text can be edited in script.js (PRODUCTS) and index.html.
