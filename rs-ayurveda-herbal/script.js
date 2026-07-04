@@ -7,71 +7,48 @@
 // ---- CONFIG ----
 const WHATSAPP_NUMBER = "919582771432"; // 91 + 9582771432
 
-// ---- PRODUCT DATA (edit prices/packs here) ----
+// ---- PRODUCT DATA (edit prices here) ----
 const PRODUCTS = {
   Oil: {
     label: "Horse Power Gold Max Oil",
     img: "assets/oil.png",
-    packs: [
-      { qty: "1 Bottle",  price: 699,  old: 1299, tag: "TRY IT" },
-      { qty: "2 Bottles", price: 1299, old: 2598, tag: "POPULAR" },
-      { qty: "3 Bottles", price: 1799, old: 3897, tag: "BEST VALUE" },
-    ],
+    qty: "1 Bottle",
+    price: 999,
+    old: 1499,
   },
   Capsules: {
     label: "Horse Power Gold Max Capsules",
     img: "assets/capsule.png",
-    packs: [
-      { qty: "30 Caps",  price: 899,  old: 1599, tag: "TRY IT" },
-      { qty: "60 Caps",  price: 1599, old: 3198, tag: "POPULAR" },
-      { qty: "90 Caps",  price: 2199, old: 4797, tag: "BEST VALUE" },
-    ],
+    qty: "30 Capsules",
+    price: 1499,
+    old: 1999,
   },
 };
 
 let selectedType = "Oil";
-let selectedPackIndex = 0;
 
 const rupee = n => "₹" + n.toLocaleString("en-IN");
 
 // ---- ELEMENTS ----
 const $ = id => document.getElementById(id);
-const packGrid   = $("packGrid");
 const psPrice    = $("psPrice");
 const psOld      = $("psOld");
 const psSave     = $("psSave");
+const packNote   = $("packNote");
 const galleryMain= $("galleryMain");
 const mbPrice    = $("mbPrice");
 const mbType     = $("mbType");
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* ========== VARIANT + PACK SELECTION ========== */
-function renderPacks(){
-  const packs = PRODUCTS[selectedType].packs;
-  packGrid.innerHTML = packs.map((p,i)=>`
-    <div class="pack-card ${i===selectedPackIndex?"active":""}" data-idx="${i}">
-      ${p.tag?`<span class="pk-tag">${p.tag}</span>`:""}
-      <div class="pk-qty">${p.qty}</div>
-      <div class="pk-price">${rupee(p.price)}</div>
-      <div class="pk-old">${rupee(p.old)}</div>
-    </div>
-  `).join("");
-  packGrid.querySelectorAll(".pack-card").forEach(card=>{
-    card.addEventListener("click",()=>{
-      selectedPackIndex = +card.dataset.idx;
-      renderPacks();
-      updatePrice();
-    });
-  });
-}
-
+/* ========== PRODUCT SELECTION ========== */
 function updatePrice(){
-  const p = PRODUCTS[selectedType].packs[selectedPackIndex];
+  const p = PRODUCTS[selectedType];
   const save = p.old - p.price;
   psPrice.textContent = rupee(p.price);
   psOld.textContent   = rupee(p.old);
   psSave.textContent  = "You save " + rupee(save);
+  if(packNote) packNote.textContent = p.label + " — " + p.qty;
   mbPrice.textContent = rupee(p.price);
   mbType.textContent  = selectedType + " • " + p.qty;
 }
@@ -88,11 +65,9 @@ document.querySelectorAll(".type-btn").forEach(btn=>{
     document.querySelectorAll(".type-btn").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
     selectedType = btn.dataset.type;
-    selectedPackIndex = 0;
     setMainImage(btn.dataset.img, selectedType==="Oil"?"🧴":"💊");
     // sync gallery thumbs active
     document.querySelectorAll(".thumb").forEach(t=>t.classList.toggle("active", t.dataset.img===btn.dataset.img));
-    renderPacks();
     updatePrice();
   });
 });
@@ -106,7 +81,6 @@ document.querySelectorAll(".thumb").forEach(t=>{
   });
 });
 
-renderPacks();
 updatePrice();
 
 /* ========== URGENCY BADGES (advertisement) ========== */
@@ -155,8 +129,8 @@ const backToForm  = $("backToForm");
 let currentOrder = { product:"", price:"" };
 
 function openBuy(){
-  const p = PRODUCTS[selectedType].packs[selectedPackIndex];
-  currentOrder.product = PRODUCTS[selectedType].label + " (" + p.qty + ")";
+  const p = PRODUCTS[selectedType];
+  currentOrder.product = p.label + " (" + p.qty + ")";
   currentOrder.price   = rupee(p.price);
   selProduct.textContent = currentOrder.product;
   selPrice.textContent   = currentOrder.price;
