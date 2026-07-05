@@ -1,0 +1,41 @@
+<div class="section">
+  <div class="page-width">
+    <div class="section-heading">
+      <h1>{{ 'general.search.search' | t }}</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:0.8rem;max-width:520px;margin:2rem auto 0;">
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}"
+               style="flex:1;padding:1.3rem 1.6rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <button type="submit" class="btn">{{ 'general.search.search' | t }}</button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      {%- if search.results.size > 0 -%}
+        <p class="text-center">{{ 'general.search.results_for' | t: terms: search.terms }}</p>
+        <div class="grid grid--{{ section.settings.columns }}" style="margin-top:2.4rem;">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- else -%}
+              <a href="{{ item.url }}" class="card reveal" style="padding:1.6rem;">
+                <h3 class="card__title" style="text-align:left;">{{ item.title }}</h3>
+                <p>{{ item.content | default: item.excerpt | strip_html | truncatewords: 20 }}</p>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="text-center">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 3, "max": 5, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

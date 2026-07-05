@@ -1,0 +1,48 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "copyright_text": "All rights reserved."
+      },
+      "blocks": {
+        "brand": {
+          "type": "brand",
+          "settings": {
+            "heading": "Dekor Company",
+            "text": "<p>Unique, handcrafted home decor to transform your living space.</p>"
+          }
+        },
+        "shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer"
+          }
+        },
+        "about": {
+          "type": "text",
+          "settings": {
+            "heading": "Customer Care",
+            "text": "<p><a href=\"/pages/contact\">Contact us</a><br><a href=\"/policies/shipping-policy\">Shipping</a><br><a href=\"/policies/refund-policy\">Returns</a></p>"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Join our newsletter",
+            "text": "Get decor inspiration and exclusive offers."
+          }
+        }
+      },
+      "block_order": ["brand", "shop", "about", "newsletter"]
+    },
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "settings": {}
+    }
+  },
+  "order": ["footer", "cart-drawer"]
+}

@@ -1,0 +1,204 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Dekor Home Decor",
+    "theme_version": "1.0.0",
+    "theme_author": "Dekor Studio",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand palette"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Page background",
+        "default": "#faf7f2"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface / cards",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body text",
+        "default": "#2c2a27"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "Headings",
+        "default": "#1a1815"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent / primary",
+        "default": "#a8743a"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_text",
+        "label": "Text on accent",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Borders",
+        "default": "#e6ddd1"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale price",
+        "default": "#b23a3a"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "playfair_display_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_heading_scale",
+        "label": "Heading size scale",
+        "min": 90,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "default": 110
+      },
+      {
+        "type": "range",
+        "id": "font_body_scale",
+        "label": "Body size scale",
+        "min": 90,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1280
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "label": "Spacing between sections",
+        "min": 20,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 64
+      },
+      {
+        "type": "range",
+        "id": "corner_radius",
+        "label": "Corner radius",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 6
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "product_image_ratio",
+        "label": "Image ratio",
+        "options": [
+          { "value": "adapt", "label": "Adapt to image" },
+          { "value": "square", "label": "Square (1:1)" },
+          { "value": "portrait", "label": "Portrait (3:4)" }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_secondary_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quick_add",
+        "label": "Show quick add button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook URL" },
+      { "type": "text", "id": "social_pinterest", "label": "Pinterest URL" },
+      { "type": "text", "id": "social_twitter", "label": "X / Twitter URL" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube URL" }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_note",
+        "label": "Enable cart note",
+        "default": true
+      }
+    ]
+  }
+]

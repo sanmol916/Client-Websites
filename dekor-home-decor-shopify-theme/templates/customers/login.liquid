@@ -1,0 +1,16 @@
+<div class="section">
+  <div class="page-width" style="max-width:440px;">
+    <div class="section-heading"><h1>Login</h1></div>
+
+    {% form 'customer_login' %}
+      {%- if form.errors -%}<p style="color:var(--color-sale);">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <div style="display:grid;gap:1.2rem;">
+        <input type="email" name="customer[email]" placeholder="Email" required style="padding:1.2rem 1.6rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <input type="password" name="customer[password]" placeholder="Password" style="padding:1.2rem 1.6rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <button type="submit" class="btn btn--full">Sign in</button>
+      </div>
+    {% endform %}
+
+    <p style="margin-top:1.6rem;text-align:center;">New customer? <a href="{{ routes.account_register_url }}" class="link-underline">Create an account</a></p>
+  </div>
+</div>

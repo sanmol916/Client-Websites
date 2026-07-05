@@ -1,0 +1,30 @@
+<div class="section">
+  <div class="page-width">
+    <div class="section-heading left"><h1>Order {{ order.name }}</h1>
+      <p>Placed on {{ order.created_at | date: '%B %d, %Y' }}</p>
+    </div>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="text-align:left;border-bottom:1px solid var(--color-border);">
+          <th style="padding:1rem 0;">Product</th><th>Price</th><th>Qty</th><th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for line in order.line_items -%}
+          <tr style="border-bottom:1px solid var(--color-border);">
+            <td style="padding:1rem 0;">{{ line.title }}</td>
+            <td>{{ line.price | money }}</td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.final_line_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+    <div style="text-align:right;margin-top:1.6rem;">
+      <p>Subtotal: {{ order.line_items_subtotal_price | money }}</p>
+      <p>Shipping: {{ order.shipping_price | money }}</p>
+      <p style="font-size:2rem;font-weight:600;">Total: {{ order.total_price | money }}</p>
+    </div>
+    <a href="{{ routes.account_url }}" class="link-underline">Back to account</a>
+  </div>
+</div>

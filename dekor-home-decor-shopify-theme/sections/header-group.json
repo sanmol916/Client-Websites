@@ -1,0 +1,23 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Free shipping on all orders — Handcrafted home decor",
+        "bg_color": "#1a1815",
+        "text_color": "#faf7f2"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_height": 48,
+        "menu": "main-menu",
+        "show_search": true
+      }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

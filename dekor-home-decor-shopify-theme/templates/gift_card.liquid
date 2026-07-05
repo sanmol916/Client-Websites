@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.initial_value | money, shop: shop.name }}</title>
+    {{ content_for_header }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {% style %}
+      :root{
+        --color-background:{{ settings.color_background }};--color-surface:{{ settings.color_surface }};
+        --color-text:{{ settings.color_text }};--color-heading:{{ settings.color_heading }};
+        --color-accent:{{ settings.color_accent }};--color-accent-text:{{ settings.color_accent_text }};
+        --color-border:{{ settings.color_border }};--corner-radius:{{ settings.corner_radius }}px;
+        --font-body-family:{{ settings.font_body.family }},{{ settings.font_body.fallback_families }};
+        --font-heading-family:{{ settings.font_heading.family }},{{ settings.font_heading.fallback_families }};
+        --font-heading-weight:{{ settings.font_heading.weight }};--font-body-weight:{{ settings.font_body.weight }};
+        --font-heading-scale:1;--font-body-scale:1;--page-width:{{ settings.page_width }}px;--section-spacing:64px;
+      }
+    {% endstyle %}
+  </head>
+  <body class="template-gift-card">
+    <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 1.6rem;">
+      <div style="text-align:center;max-width:420px;">
+        <p class="eyebrow">{{ shop.name }}</p>
+        <h1>{{ 'gift_cards.issued.subtext' | t }}</h1>
+        <div style="font-size:3.6rem;font-weight:600;margin:1.6rem 0;">{{ gift_card.balance | money }}</div>
+        {%- if gift_card.qr_identifier -%}
+          <img src="{{ gift_card.qr_identifier | generate_qr_code }}" alt="Gift card QR" style="margin:0 auto;">
+        {%- endif -%}
+        <p style="font-family:monospace;font-size:2rem;letter-spacing:2px;margin-top:1.6rem;">{{ gift_card.code | format_code }}</p>
+      </div>
+    </main>
+  </body>
+</html>

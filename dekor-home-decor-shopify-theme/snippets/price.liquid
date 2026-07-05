@@ -1,0 +1,36 @@
+{%- comment -%}
+  Renders a product/variant price with sale + compare-at handling.
+  Params:
+    product_or_variant: a product or variant object
+{%- endcomment -%}
+{%- liquid
+  if product_or_variant == null
+    assign product_or_variant = product
+  endif
+
+  assign target = product_or_variant
+  assign price = target.price
+  assign compare = target.compare_at_price
+
+  assign on_sale = false
+  if compare != null and compare > price
+    assign on_sale = true
+  endif
+
+  assign is_product = false
+  if target.variants
+    assign is_product = true
+  endif
+-%}
+<span class="price {% if on_sale %}price--on-sale{% endif %}">
+  {%- if is_product and target.price_varies -%}
+    {{ 'products.product.from_price' | t: price: target.price_min | money }}
+  {%- else -%}
+    {%- if on_sale -%}
+      <span class="price__sale">{{ price | money }}</span>
+      <span class="price__compare">{{ compare | money }}</span>
+    {%- else -%}
+      <span>{{ price | money }}</span>
+    {%- endif -%}
+  {%- endif -%}
+</span>

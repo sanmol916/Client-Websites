@@ -1,0 +1,107 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "subheading": "Handcrafted home decor",
+            "heading": "Decor that tells your story",
+            "text": "Unique pieces for every corner of your living space.",
+            "button_label": "Shop now",
+            "alignment": "left"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "subheading": "New arrivals",
+            "heading": "Wall art & mirrors",
+            "text": "Statement pieces, handpicked for you.",
+            "button_label": "Explore",
+            "alignment": "center"
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2"],
+      "settings": { "autoplay": true, "speed": 6 }
+    },
+    "features": {
+      "type": "icon-features",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "truck", "title": "Free shipping", "text": "Free delivery on every order." } },
+        "f2": { "type": "feature", "settings": { "icon": "shield", "title": "Price match guarantee", "text": "Find it cheaper? We'll match it." } },
+        "f3": { "type": "feature", "settings": { "icon": "leaf", "title": "Handcrafted quality", "text": "Made by the finest artisans." } },
+        "f4": { "type": "feature", "settings": { "icon": "gift", "title": "Easy returns", "text": "Simple, worry-free returns." } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": { "heading": "Why Dekor Company" }
+    },
+    "categories": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": { "type": "collection", "settings": { "title": "Wall Art" } },
+        "c2": { "type": "collection", "settings": { "title": "Mirrors" } },
+        "c3": { "type": "collection", "settings": { "title": "Showpieces" } },
+        "c4": { "type": "collection", "settings": { "title": "Table Lamps" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": { "subheading": "Shop by category", "heading": "Explore our collections", "columns": 4 }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": { "subheading": "Handpicked for you", "heading": "Featured products", "products_to_show": 4, "columns": 4 }
+    },
+    "banner": {
+      "type": "media-banner",
+      "settings": {
+        "subheading": "Our promise",
+        "heading": "Crafted to last a lifetime",
+        "text": "<p>Top-quality raw materials, designed by the finest artisans.</p>",
+        "button_label": "Discover more",
+        "height": 480,
+        "overlay_opacity": 35
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "subheading": "Our story",
+        "heading": "Designed with the 7 elements of interior design",
+        "text": "<p>Space, line, light, shape, color, pattern, and texture — thoughtfully combined into every piece we make.</p>",
+        "button_label": "Learn more",
+        "layout": "image_first"
+      }
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": { "subheading": "Trending now", "heading": "Bestsellers", "products_to_show": 4, "columns": 4 }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "quote": "Beautiful, high-quality decor that transformed my living room!", "author": "Priya S." } },
+        "t2": { "type": "testimonial", "settings": { "quote": "Fast delivery and the piece looks exactly like the photos.", "author": "Rahul M." } },
+        "t3": { "type": "testimonial", "settings": { "quote": "Exquisite craftsmanship. Conversation starters in my home.", "author": "Ananya K." } }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": { "subheading": "Loved by customers", "heading": "What our customers say", "columns": 3 }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": { "subheading": "Stay in touch", "heading": "Join our newsletter", "text": "Sign up for decor inspiration and exclusive offers." }
+    }
+  },
+  "order": [
+    "hero",
+    "features",
+    "categories",
+    "featured",
+    "banner",
+    "image-with-text",
+    "bestsellers",
+    "testimonials",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,28 @@
+<div class="section">
+  <div class="page-width" style="max-width:680px;">
+    <div class="section-heading left"><h1>Your addresses</h1>
+      <a href="{{ routes.account_url }}" class="link-underline">Back to account</a>
+    </div>
+
+    {% form 'customer_address', customer.new_address %}
+      <h2 class="h3">Add a new address</h2>
+      <div style="display:grid;gap:1.2rem;">
+        <input type="text" name="address[first_name]" placeholder="First name" style="padding:1.2rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <input type="text" name="address[last_name]" placeholder="Last name" style="padding:1.2rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <input type="text" name="address[address1]" placeholder="Address" style="padding:1.2rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <input type="text" name="address[city]" placeholder="City" style="padding:1.2rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <input type="text" name="address[zip]" placeholder="ZIP / Postal code" style="padding:1.2rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <input type="text" name="address[country]" placeholder="Country" style="padding:1.2rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <button type="submit" class="btn" style="justify-self:start;">Add address</button>
+      </div>
+    {% endform %}
+
+    <div style="margin-top:3.2rem;">
+      {%- for address in customer.addresses -%}
+        <div style="border:1px solid var(--color-border);border-radius:var(--corner-radius);padding:1.6rem;margin-bottom:1.2rem;">
+          {{ address | format_address }}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>

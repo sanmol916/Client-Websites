@@ -1,0 +1,80 @@
+<div class="slideshow" data-slideshow data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}">
+  <div class="slideshow__track" data-slideshow-track>
+    {%- for block in section.blocks -%}
+      <div class="slide" data-slide {{ block.shopify_attributes }}
+        {% if block.settings.image %}style="background-image:url('{{ block.settings.image | image_url: width: 2000 }}');"{% else %}style="background:{{ block.settings.bg_color }};"{% endif %}>
+        {%- if block.settings.image and block.settings.overlay_opacity > 0 -%}
+          <div class="slide__overlay" style="background:rgba(0,0,0,{{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+        {%- endif -%}
+        <div class="page-width" style="width:100%;">
+          <div class="slide__content align-{{ block.settings.alignment }}">
+            {%- if block.settings.subheading != blank -%}<p class="eyebrow" style="color:{{ block.settings.text_color }};">{{ block.settings.subheading }}</p>{%- endif -%}
+            {%- if block.settings.heading != blank -%}<h2 class="h1" style="color:{{ block.settings.text_color }};">{{ block.settings.heading }}</h2>{%- endif -%}
+            {%- if block.settings.text != blank -%}<p style="color:{{ block.settings.text_color }};">{{ block.settings.text }}</p>{%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <a href="{{ block.settings.button_link }}" class="btn">{{ block.settings.button_label }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="slide" data-slide style="background:var(--color-border);">
+        <div class="page-width"><div class="slide__content"><h2 class="h1">Your hero heading</h2><p>Add slides in the theme editor.</p></div></div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="slideshow__controls">
+      {%- for block in section.blocks -%}
+        <button class="slideshow__dot {% if forloop.first %}is-active{% endif %}" data-slide-dot aria-label="Slide {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Hero slideshow",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "speed", "label": "Change slides every", "min": 3, "max": 12, "step": 1, "unit": "s", "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Background image" },
+        { "type": "color", "id": "bg_color", "label": "Fallback background", "default": "#e6ddd1" },
+        { "type": "range", "id": "overlay_opacity", "label": "Image overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 25 },
+        { "type": "text", "id": "subheading", "label": "Subheading", "default": "New Collection" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Decor that tells your story" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Handcrafted pieces for every corner of your home." },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        {
+          "type": "select", "id": "alignment", "label": "Content alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero slideshow",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide", "settings": { "subheading": "Bestsellers", "heading": "Wall art & mirrors", "text": "Statement pieces, handpicked for you." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,41 @@
+<div class="section">
+  <div class="page-width">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+      <h1>My account</h1>
+      <a href="{{ routes.account_logout_url }}" class="link-underline">Log out</a>
+    </div>
+
+    <div style="display:grid;gap:3.2rem;grid-template-columns:1fr;margin-top:2.4rem;">
+      <div>
+        <h2 class="h3">Order history</h2>
+        {%- if customer.orders.size > 0 -%}
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="text-align:left;border-bottom:1px solid var(--color-border);">
+                <th style="padding:1rem 0;">Order</th><th>Date</th><th>Total</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr style="border-bottom:1px solid var(--color-border);">
+                  <td style="padding:1rem 0;"><a href="{{ order.customer_url }}" class="link-underline">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <p>You haven't placed any orders yet.</p>
+        {%- endif -%}
+      </div>
+
+      <div>
+        <h2 class="h3">Account details</h2>
+        <p>{{ customer.name }}<br>{{ customer.email }}</p>
+        <a href="{{ routes.account_addresses_url }}" class="link-underline">View addresses ({{ customer.addresses_count }})</a>
+      </div>
+    </div>
+  </div>
+</div>

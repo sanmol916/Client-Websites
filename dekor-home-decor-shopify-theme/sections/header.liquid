@@ -1,0 +1,106 @@
+<header class="header" data-header>
+  <div class="header__inner">
+    <button class="header__actions header__menu-toggle" data-menu-toggle aria-label="{{ 'sections.header.menu' | t }}" style="grid-column:1;justify-self:start;">
+      {% render 'icon', icon: 'menu' %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 400 }}"
+             alt="{{ shop.name | escape }}"
+             width="{{ section.settings.logo.width }}"
+             height="{{ section.settings.logo.height }}"
+             style="max-height: {{ section.settings.logo_height }}px;">
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" role="navigation">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="header__actions">
+      {%- if section.settings.show_search -%}
+        <a href="{{ routes.search_url }}" data-search-toggle aria-label="{{ 'sections.header.search' | t }}">{% render 'icon', icon: 'search' %}</a>
+      {%- endif -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" aria-label="{{ 'sections.header.account' | t }}">{% render 'icon', icon: 'account' %}</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" data-cart-toggle aria-label="{{ 'sections.header.cart' | t }}" style="display:inline-flex;">
+        {% render 'icon', icon: 'cart' %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile menu drawer {%- endcomment -%}
+<div class="menu-drawer" data-menu-drawer>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
+    <span class="footer__heading" style="color:var(--color-heading);margin:0;">{{ 'sections.header.menu' | t }}</span>
+    <button data-menu-close aria-label="Close" style="background:none;border:none;">{% render 'icon', icon: 'close' %}</button>
+  </div>
+  <ul>
+    {%- for link in section.settings.menu.links -%}
+      <li><a href="{{ link.url }}" data-menu-close>{{ link.title }}</a></li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{%- comment -%} Search modal {%- endcomment -%}
+{%- if section.settings.show_search -%}
+  <div class="menu-drawer" data-search-modal style="inset:0 0 auto 0;max-width:none;transform:translateY(-100%);">
+    <div class="page-width" style="padding-top:2rem;padding-bottom:2rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.6rem;">
+        <span class="footer__heading" style="color:var(--color-heading);margin:0;">{{ 'general.search.search' | t }}</span>
+        <button data-search-close aria-label="Close" style="background:none;border:none;">{% render 'icon', icon: 'close' %}</button>
+      </div>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:0.8rem;">
+        <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" value="{{ search.terms | escape }}"
+               style="flex:1;padding:1.3rem 1.6rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);">
+        <button type="submit" class="btn">{{ 'general.search.search' | t }}</button>
+      </form>
+    </div>
+  </div>
+  <style>[data-search-modal].is-open{transform:translateY(0)!important;}</style>
+{%- endif -%}
+
+<div class="overlay" data-overlay></div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

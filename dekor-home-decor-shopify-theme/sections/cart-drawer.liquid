@@ -1,0 +1,64 @@
+<div class="cart-drawer" data-cart-drawer>
+  <div data-cart-drawer-inner style="display:flex;flex-direction:column;height:100%;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
+      <h2 class="h3" style="margin:0;">{{ 'cart.general.title' | t }}</h2>
+      <button data-cart-close aria-label="Close" style="background:none;border:none;">{% render 'icon', icon: 'close' %}</button>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div style="flex:1;overflow-y:auto;">
+        {%- for item in cart.items -%}
+          <div class="cart-item">
+            <a href="{{ item.url }}">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title | escape }}" width="72" height="72" loading="lazy">
+              {%- endif -%}
+            </a>
+            <div>
+              <a href="{{ item.url }}" style="font-weight:600;">{{ item.product.title }}</a>
+              {%- unless item.variant.title contains 'Default' -%}
+                <div style="font-size:1.3rem;opacity:0.7;">{{ item.variant.title }}</div>
+              {%- endunless -%}
+              <div class="quantity-selector" style="margin-top:0.8rem;">
+                <a href="#" data-cart-change="{{ item.quantity | minus: 1 }}" data-line="{{ forloop.index }}" aria-label="Decrease">&minus;</a>
+                <input type="text" value="{{ item.quantity }}" readonly aria-label="Quantity">
+                <a href="#" data-cart-change="{{ item.quantity | plus: 1 }}" data-line="{{ forloop.index }}" aria-label="Increase">+</a>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <div class="price">{{ item.final_line_price | money }}</div>
+              <a href="#" data-cart-change="0" data-line="{{ forloop.index }}" style="font-size:1.2rem;opacity:0.7;text-decoration:underline;">{{ 'cart.general.remove' | t }}</a>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div style="border-top:1px solid var(--color-border);padding-top:1.6rem;margin-top:1.6rem;">
+        {%- if settings.show_cart_note -%}
+          <label for="CartDrawerNote" style="display:block;font-size:1.3rem;margin-bottom:0.4rem;">{{ 'cart.general.note' | t }}</label>
+          <textarea id="CartDrawerNote" name="note" form="cart-drawer-form" style="width:100%;padding:1rem;border:1px solid var(--color-border);border-radius:var(--corner-radius);margin-bottom:1.2rem;">{{ cart.note }}</textarea>
+        {%- endif -%}
+        <div style="display:flex;justify-content:space-between;font-weight:600;margin-bottom:0.6rem;">
+          <span>{{ 'cart.general.subtotal' | t }}</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+        <p style="font-size:1.2rem;opacity:0.7;margin:0 0 1.2rem;">{{ 'cart.general.taxes_and_shipping_at_checkout' | t }}</p>
+        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form">
+          <button type="submit" name="checkout" class="btn btn--full">{{ 'cart.general.checkout' | t }}</button>
+        </form>
+      </div>
+    {%- else -%}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+        <p>{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--secondary" data-cart-close>{{ 'cart.general.continue_shopping' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

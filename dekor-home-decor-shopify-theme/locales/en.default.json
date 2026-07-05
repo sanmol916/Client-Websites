@@ -1,0 +1,74 @@
+{
+  "general": {
+    "search": {
+      "search": "Search",
+      "placeholder": "Search our store",
+      "results_for": "Results for \"{{ terms }}\"",
+      "no_results": "No results found for \"{{ terms }}\"",
+      "reset": "Clear search"
+    },
+    "newsletter": {
+      "success": "Thanks for subscribing",
+      "email": "Email"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{ number }}"
+    },
+    "social": {
+      "follow_us": "Follow us"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for does not exist.",
+      "link": "Continue shopping"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "sale": "Sale",
+      "from_price": "From {{ price }}",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "description": "Description",
+      "view_details": "View details",
+      "quick_add": "Quick add"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Check out",
+      "remove": "Remove",
+      "note": "Order note",
+      "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout",
+      "update": "Update"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read more",
+      "by_author": "by {{ author }}",
+      "comments": "{{ count }} comments"
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "cart": "Cart",
+      "account": "Account",
+      "search": "Search"
+    },
+    "footer": {
+      "newsletter_heading": "Join our newsletter"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{{ settings.color_accent }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.font_heading.system == false -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.pagination.page' | t: number: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font = settings.font_body
+      assign heading_font = settings.font_heading
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
+    -%}
+
+    {% style %}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ heading_font_bold | font_face: font_display: 'swap' }}
+
+      :root {
+        --color-background: {{ settings.color_background }};
+        --color-surface: {{ settings.color_surface }};
+        --color-text: {{ settings.color_text }};
+        --color-heading: {{ settings.color_heading }};
+        --color-accent: {{ settings.color_accent }};
+        --color-accent-text: {{ settings.color_accent_text }};
+        --color-border: {{ settings.color_border }};
+        --color-sale: {{ settings.color_sale }};
+
+        --font-body-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+        --font-body-weight: {{ body_font.weight }};
+        --font-heading-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --font-heading-weight: {{ heading_font.weight }};
+        --font-heading-scale: {{ settings.font_heading_scale | divided_by: 100.0 }};
+        --font-body-scale: {{ settings.font_body_scale | divided_by: 100.0 }};
+
+        --page-width: {{ settings.page_width }}px;
+        --section-spacing: {{ settings.section_spacing }}px;
+        --corner-radius: {{ settings.corner_radius }}px;
+      }
+    {% endstyle %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>document.documentElement.className = 'js';</script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}">
+    <a class="skip-to-content-link visually-hidden" href="#MainContent">Skip to content</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main-content" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">Choosing a selection results in a full page refresh.</li>
+    </ul>
+  </body>
+</html>

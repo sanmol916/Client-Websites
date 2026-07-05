@@ -1,0 +1,73 @@
+{%- comment -%}
+  Renders a product card.
+  Params:
+    product: the product object (required)
+    show_quick_add: override theme setting (optional boolean)
+{%- endcomment -%}
+{%- liquid
+  assign ratio_class = 'ratio-portrait'
+  case settings.product_image_ratio
+    when 'square'
+      assign ratio_class = 'ratio-square'
+    when 'adapt'
+      assign ratio_class = 'ratio-adapt'
+  endcase
+
+  assign show_add = settings.show_quick_add
+  if show_quick_add != null
+    assign show_add = show_quick_add
+  endif
+-%}
+
+{%- if product and product != empty -%}
+  <div class="card {{ ratio_class }} reveal">
+    <a href="{{ product.url }}" class="card__media" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 600 }}"
+          srcset="{{ product.featured_media | image_url: width: 300 }} 300w, {{ product.featured_media | image_url: width: 600 }} 600w, {{ product.featured_media | image_url: width: 900 }} 900w"
+          sizes="(min-width: 990px) 25vw, 50vw"
+          alt="{{ product.featured_media.alt | escape }}"
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+          loading="lazy">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'card__placeholder' }}
+      {%- endif -%}
+
+      {%- if settings.show_secondary_image and product.media[1] -%}
+        <img class="card__image--hover"
+          src="{{ product.media[1] | image_url: width: 600 }}"
+          alt="{{ product.media[1].alt | escape }}"
+          loading="lazy">
+      {%- endif -%}
+
+      {%- unless product.available -%}
+        <span class="card__badge card__badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+      {%- else -%}
+        {%- if product.compare_at_price > product.price -%}
+          <span class="card__badge">{{ 'products.product.sale' | t }}</span>
+        {%- endif -%}
+      {%- endunless -%}
+    </a>
+
+    <div class="card__info">
+      {%- if settings.show_vendor and product.vendor != blank -%}
+        <div class="card__vendor">{{ product.vendor }}</div>
+      {%- endif -%}
+      <h3 class="card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+      {% render 'price', product_or_variant: product %}
+
+      {%- if show_add and product.available -%}
+        {%- if product.variants.size > 1 -%}
+          <a href="{{ product.url }}" class="btn btn--secondary quick-add">{{ 'products.product.view_details' | t }}</a>
+        {%- else -%}
+          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-ajax-cart class="quick-add">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="btn btn--secondary btn--full">{{ 'products.product.quick_add' | t }}</button>
+          </form>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

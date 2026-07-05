@@ -1,0 +1,53 @@
+<div class="section">
+  <div class="page-width">
+    <div class="section-heading reveal">
+      {%- if section.settings.subheading != blank -%}<p class="eyebrow">{{ section.settings.subheading }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="grid grid--{{ section.settings.columns }}">
+      {%- for block in section.blocks -%}
+        <div class="testimonial reveal" {{ block.shopify_attributes }}>
+          <div class="testimonial__stars">
+            {%- for i in (1..block.settings.rating) -%}{% render 'icon', icon: 'star' %}{%- endfor -%}
+          </div>
+          <div class="testimonial__quote">"{{ block.settings.quote }}"</div>
+          {%- if block.settings.author != blank -%}<div class="testimonial__author">{{ block.settings.author }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>#shopify-section-{{ section.id }} .testimonial__stars svg{width:16px;height:16px;display:inline-block;}</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Loved by customers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our customers say" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 3, "step": 1, "default": 3 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Star rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Beautiful, high-quality decor that transformed my living room. Highly recommend!" },
+        { "type": "text", "id": "author", "label": "Author", "default": "Priya S." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial", "settings": { "quote": "Fast delivery and the piece looks exactly like the photos. Will shop again.", "author": "Rahul M." } },
+        { "type": "testimonial", "settings": { "quote": "Exquisite craftsmanship. These are conversation starters in my home.", "author": "Ananya K." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

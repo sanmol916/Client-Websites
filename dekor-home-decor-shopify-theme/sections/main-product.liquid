@@ -1,0 +1,152 @@
+<div class="section">
+  <div class="page-width">
+    <div class="product" data-product-form data-gallery>
+      {%- comment -%} Media gallery {%- endcomment -%}
+      <div class="product__media">
+        {%- if product.featured_media -%}
+          <img data-gallery-main
+            src="{{ product.featured_media | image_url: width: 1200 }}"
+            alt="{{ product.featured_media.alt | escape }}"
+            width="{{ product.featured_media.width }}" height="{{ product.featured_media.height }}">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media -%}
+              <img data-gallery-thumb
+                src="{{ media | image_url: width: 160 }}"
+                data-full="{{ media | image_url: width: 1200 }}"
+                alt="{{ media.alt | escape }}" width="84" height="84" loading="lazy">
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product info + blocks {%- endcomment -%}
+      <div class="product__info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'vendor' -%}
+              {%- if product.vendor != blank -%}<p class="eyebrow" {{ block.shopify_attributes }}>{{ product.vendor }}</p>{%- endif -%}
+
+            {%- when 'title' -%}
+              <h1 {{ block.shopify_attributes }}>{{ product.title }}</h1>
+
+            {%- when 'price' -%}
+              <div class="product__price" data-product-price {{ block.shopify_attributes }}>
+                {% render 'price', product_or_variant: product.selected_or_first_available_variant %}
+              </div>
+
+            {%- when 'form' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- assign current_variant = product.selected_or_first_available_variant -%}
+                <script type="application/json" data-product-json>
+                  {
+                    "variants": [
+                      {%- for v in product.variants -%}
+                        {"id": {{ v.id }}, "options": {{ v.options | json }}, "price": {{ v.price }}, "compare_at_price": {{ v.compare_at_price | default: 0 }}, "available": {{ v.available }}}{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ]
+                  }
+                </script>
+
+                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-ajax-cart>
+                  {%- unless product.has_only_default_variant -%}
+                    {%- for option in product.options_with_values -%}
+                      <label class="variant-label">{{ option.name }}</label>
+                      <select data-option-selector name="options[{{ option.name | escape }}]">
+                        {%- for value in option.values -%}
+                          <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                        {%- endfor -%}
+                      </select>
+                    {%- endfor -%}
+                  {%- endunless -%}
+
+                  <input type="hidden" name="id" data-variant-id value="{{ current_variant.id }}">
+
+                  <div style="display:flex;gap:1.2rem;align-items:flex-end;margin-top:1.6rem;flex-wrap:wrap;">
+                    <div>
+                      <label class="variant-label">{{ 'products.product.quantity' | t }}</label>
+                      <div class="quantity-selector">
+                        <button type="button" data-qty-change="-1" aria-label="Decrease">&minus;</button>
+                        <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+                        <button type="button" data-qty-change="1" aria-label="Increase">+</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="product-form__buttons">
+                    <button type="submit" class="btn btn--full"
+                      data-add-label="{{ 'products.product.add_to_cart' | t }}"
+                      data-soldout-label="{{ 'products.product.sold_out' | t }}"
+                      {% unless current_variant.available %}disabled{% endunless %}>
+                      {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+                    </button>
+                    {{ form | payment_button }}
+                  </div>
+                </form>
+              </div>
+
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div class="rte" style="margin-top:2.4rem;" {{ block.shopify_attributes }}>
+                  <h3 class="h4">{{ 'products.product.description' | t }}</h3>
+                  {{ product.description }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'custom_text' -%}
+              {%- if block.settings.text != blank -%}
+                <div class="rte" style="margin-top:1.6rem;" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+              {%- endif -%}
+
+            {%- when 'collapsible' -%}
+              <details style="border-top:1px solid var(--color-border);padding:1.2rem 0;margin-top:1rem;" {{ block.shopify_attributes }}>
+                <summary style="cursor:pointer;font-weight:600;">{{ block.settings.heading }}</summary>
+                <div class="rte" style="margin-top:1rem;">{{ block.settings.content }}</div>
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product information",
+  "blocks": [
+    { "type": "vendor", "name": "Vendor", "limit": 1 },
+    { "type": "title", "name": "Title", "limit": 1 },
+    { "type": "price", "name": "Price", "limit": 1 },
+    { "type": "form", "name": "Buy buttons", "limit": 1 },
+    { "type": "description", "name": "Description", "limit": 1 },
+    {
+      "type": "custom_text", "name": "Custom text",
+      "settings": [ { "type": "richtext", "id": "text", "label": "Text" } ]
+    },
+    {
+      "type": "collapsible", "name": "Collapsible row",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shipping & returns" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Free shipping. 7-day returns.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product information",
+      "blocks": [
+        { "type": "vendor" },
+        { "type": "title" },
+        { "type": "price" },
+        { "type": "form" },
+        { "type": "description" },
+        { "type": "collapsible" }
+      ]
+    }
+  ]
+}
+{% endschema %}

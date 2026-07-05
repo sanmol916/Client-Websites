@@ -1,0 +1,46 @@
+<div class="section">
+  <div class="page-width" style="max-width:760px;text-align:{{ section.settings.alignment }};">
+    {%- for block in section.blocks -%}
+      <div class="reveal" {{ block.shopify_attributes }}>
+        {%- case block.type -%}
+          {%- when 'subheading' -%}
+            <p class="eyebrow">{{ block.settings.text }}</p>
+          {%- when 'heading' -%}
+            <h2>{{ block.settings.text }}</h2>
+          {%- when 'text' -%}
+            <div class="rte">{{ block.settings.text }}</div>
+          {%- when 'button' -%}
+            <div style="margin-top:2rem;"><a href="{{ block.settings.link }}" class="btn">{{ block.settings.label }}</a></div>
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "select", "id": "alignment", "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    { "type": "subheading", "name": "Subheading", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Why Dekor" } ] },
+    { "type": "heading", "name": "Heading", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Home decor for your dream space" } ] },
+    { "type": "text", "name": "Text", "settings": [ { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Home decoration items play an important role in transforming a house into an attractive home. Discover pieces crafted with all seven elements of interior design.</p>" } ] },
+    { "type": "button", "name": "Button", "settings": [ { "type": "text", "id": "label", "label": "Label", "default": "Shop all" }, { "type": "url", "id": "link", "label": "Link" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "blocks": [ { "type": "subheading" }, { "type": "heading" }, { "type": "text" } ]
+    }
+  ]
+}
+{% endschema %}

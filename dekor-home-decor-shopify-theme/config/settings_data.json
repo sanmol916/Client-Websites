@@ -1,0 +1,42 @@
+{
+  "current": {
+    "color_background": "#faf7f2",
+    "color_surface": "#ffffff",
+    "color_text": "#2c2a27",
+    "color_heading": "#1a1815",
+    "color_accent": "#a8743a",
+    "color_accent_text": "#ffffff",
+    "color_border": "#e6ddd1",
+    "color_sale": "#b23a3a",
+    "font_heading": "playfair_display_n4",
+    "font_body": "assistant_n4",
+    "font_heading_scale": 110,
+    "font_body_scale": 100,
+    "page_width": 1280,
+    "section_spacing": 64,
+    "corner_radius": 6,
+    "product_image_ratio": "portrait",
+    "show_vendor": false,
+    "show_secondary_image": true,
+    "show_quick_add": true,
+    "social_instagram": "",
+    "social_facebook": "",
+    "social_pinterest": "",
+    "social_twitter": "",
+    "social_youtube": "",
+    "cart_type": "drawer",
+    "show_cart_note": true
+  },
+  "presets": {
+    "Dekor Home Decor": {
+      "color_background": "#faf7f2",
+      "color_surface": "#ffffff",
+      "color_text": "#2c2a27",
+      "color_heading": "#1a1815",
+      "color_accent": "#a8743a",
+      "color_accent_text": "#ffffff",
+      "color_border": "#e6ddd1",
+      "color_sale": "#b23a3a"
+    }
+  }
+}
