@@ -1,0 +1,102 @@
+<div class="section">
+  <div class="page-width">
+    <div class="section-heading reveal">
+      {%- if section.settings.subheading != blank -%}<p class="eyebrow">{{ section.settings.subheading }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+    </div>
+
+    {%- assign collection = section.settings.collection -%}
+    <div class="grid grid--{{ section.settings.columns }}">
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- comment -%} Real Shopify products {%- endcomment -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Sample/demo product listing {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign img_src = ''
+            if block.settings.image != blank
+              assign img_src = block.settings.image | image_url: width: 700
+            elsif block.settings.image_file != blank
+              assign img_src = block.settings.image_file | asset_url
+            endif
+            assign on_sale = false
+            if block.settings.compare_price != blank
+              assign on_sale = true
+            endif
+          -%}
+          <div class="card ratio-square reveal" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="card__media">
+              {%- if img_src != blank -%}
+                <img src="{{ img_src }}" alt="{{ block.settings.title | escape }}" width="700" height="700" loading="lazy" style="aspect-ratio:1/1;object-fit:cover;">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'card__placeholder' }}
+              {%- endif -%}
+              {%- if on_sale -%}<span class="card__badge">{{ 'products.product.sale' | t }}</span>{%- endif -%}
+            </a>
+            <div class="card__info">
+              <h3 class="card__title"><a href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.title }}</a></h3>
+              <span class="price">
+                {%- if on_sale -%}
+                  <span class="price__sale">{{ block.settings.price }}</span>
+                  <span class="price__compare">{{ block.settings.compare_price }}</span>
+                {%- else -%}
+                  <span>{{ block.settings.price }}</span>
+                {%- endif -%}
+              </span>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div class="text-center" style="margin-top:3.2rem;">
+        <a href="{{ collection.url | default: routes.all_products_collection_url }}" class="btn btn--secondary">{{ section.settings.view_all_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product showcase",
+  "settings": [
+    { "type": "paragraph", "content": "Connect a collection to show real products, or use the sample product blocks below." },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best Sellers" },
+    { "type": "collection", "id": "collection", "label": "Collection (optional)" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show (from collection)", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 3, "max": 5, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show 'view all' button", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View all" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Sample product",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image (upload to override)" },
+        { "type": "text", "id": "image_file", "label": "Bundled demo image filename", "info": "e.g. product-1.jpg (used only if no image uploaded)", "default": "product-1.jpg" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Handcrafted Decor Piece" },
+        { "type": "text", "id": "price", "label": "Price", "default": "₹899" },
+        { "type": "text", "id": "compare_price", "label": "Compare-at price (optional)" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product showcase",
+      "blocks": [
+        { "type": "product", "settings": { "image_file": "product-1.jpg", "title": "Rattan Storage Basket", "price": "₹899", "compare_price": "₹1,199" } },
+        { "type": "product", "settings": { "image_file": "product-2.jpg", "title": "Ceramic Vase Set", "price": "₹1,299" } },
+        { "type": "product", "settings": { "image_file": "product-3.jpg", "title": "Wooden Wall Shelf", "price": "₹1,499", "compare_price": "₹1,999" } },
+        { "type": "product", "settings": { "image_file": "product-4.jpg", "title": "Table Lamp", "price": "₹1,899" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

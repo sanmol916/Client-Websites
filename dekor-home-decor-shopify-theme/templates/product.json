@@ -19,7 +19,14 @@
       "block_order": ["vendor", "title", "price", "form", "description", "shipping"]
     },
     "related": {
-      "type": "featured-collection",
+      "type": "product-showcase",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "image_file": "product-2.jpg", "title": "Ceramic Vase Set", "price": "₹1,299" } },
+        "p2": { "type": "product", "settings": { "image_file": "product-5.jpg", "title": "Cane Serving Tray", "price": "₹749" } },
+        "p3": { "type": "product", "settings": { "image_file": "product-7.jpg", "title": "Decorative Showpiece", "price": "₹1,099" } },
+        "p4": { "type": "product", "settings": { "image_file": "product-1.jpg", "title": "Rattan Storage Basket", "price": "₹899", "compare_price": "₹1,199" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
         "subheading": "You may also like",
         "heading": "Related products",

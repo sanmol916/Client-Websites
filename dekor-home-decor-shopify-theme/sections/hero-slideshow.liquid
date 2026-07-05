@@ -1,9 +1,17 @@
 <div class="slideshow" data-slideshow data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}">
   <div class="slideshow__track" data-slideshow-track>
     {%- for block in section.blocks -%}
+      {%- liquid
+        assign bg_image = ''
+        if block.settings.image != blank
+          assign bg_image = block.settings.image | image_url: width: 2000
+        elsif block.settings.image_file != blank
+          assign bg_image = block.settings.image_file | asset_url
+        endif
+      -%}
       <div class="slide" data-slide {{ block.shopify_attributes }}
-        {% if block.settings.image %}style="background-image:url('{{ block.settings.image | image_url: width: 2000 }}');"{% else %}style="background:{{ block.settings.bg_color }};"{% endif %}>
-        {%- if block.settings.image and block.settings.overlay_opacity > 0 -%}
+        {% if bg_image != blank %}style="background-image:url('{{ bg_image }}');"{% else %}style="background:{{ block.settings.bg_color }};"{% endif %}>
+        {%- if bg_image != blank and block.settings.overlay_opacity > 0 -%}
           <div class="slide__overlay" style="background:rgba(0,0,0,{{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
         {%- endif -%}
         <div class="page-width" style="width:100%;">
@@ -47,6 +55,7 @@
       "name": "Slide",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Background image" },
+        { "type": "text", "id": "image_file", "label": "Bundled demo image", "info": "e.g. hero-1.jpg (used if no image uploaded)", "default": "hero-1.jpg" },
         { "type": "color", "id": "bg_color", "label": "Fallback background", "default": "#e6ddd1" },
         { "type": "range", "id": "overlay_opacity", "label": "Image overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 25 },
         { "type": "text", "id": "subheading", "label": "Subheading", "default": "New Collection" },

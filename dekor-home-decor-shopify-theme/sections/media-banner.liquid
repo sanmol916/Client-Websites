@@ -1,6 +1,14 @@
 <div class="{% if section.settings.full_width == false %}page-width{% endif %} section" style="{% if section.settings.full_width %}padding-left:0;padding-right:0;{% endif %}">
+  {%- liquid
+    assign banner_img = ''
+    if section.settings.image != blank
+      assign banner_img = section.settings.image | image_url: width: 2400
+    elsif section.settings.image_file != blank
+      assign banner_img = section.settings.image_file | asset_url
+    endif
+  -%}
   <div class="media-banner reveal"
-    style="min-height:{{ section.settings.height }}px;{% if section.settings.image %}background-image:url('{{ section.settings.image | image_url: width: 2400 }}');{% else %}background:var(--color-border);{% endif %}">
+    style="min-height:{{ section.settings.height }}px;{% if banner_img != blank %}background-image:url('{{ banner_img }}');{% else %}background:var(--color-border);{% endif %}">
     {%- if section.settings.overlay_opacity > 0 -%}
       <div class="slide__overlay" style="background:rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
     {%- endif -%}
@@ -22,6 +30,7 @@
   "name": "Image banner",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "image_file", "label": "Bundled demo image", "info": "e.g. banner-1.jpg", "default": "banner-1.jpg" },
     { "type": "checkbox", "id": "full_width", "label": "Full width", "default": true },
     { "type": "range", "id": "height", "label": "Height", "min": 300, "max": 800, "step": 20, "unit": "px", "default": 480 },
     { "type": "range", "id": "overlay_opacity", "label": "Overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 30 },

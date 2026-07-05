@@ -14,6 +14,8 @@
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | default: collection.title | escape }}" width="600" height="600" loading="lazy">
             {%- elsif collection.featured_image -%}
               <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" width="600" height="600" loading="lazy">
+            {%- elsif block.settings.image_file != blank -%}
+              <img src="{{ block.settings.image_file | asset_url }}" alt="{{ block.settings.title | escape }}" width="600" height="600" loading="lazy">
             {%- else -%}
               {{ 'collection-1' | placeholder_svg_tag }}
             {%- endif -%}
@@ -43,6 +45,7 @@
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "image_picker", "id": "image", "label": "Custom image (optional)" },
+        { "type": "text", "id": "image_file", "label": "Bundled demo image", "info": "e.g. category-1.jpg", "default": "category-1.jpg" },
         { "type": "text", "id": "title", "label": "Custom title (optional)" }
       ]
     }

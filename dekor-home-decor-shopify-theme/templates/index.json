@@ -6,20 +6,24 @@
         "slide-1": {
           "type": "slide",
           "settings": {
+            "image_file": "hero-1.jpg",
+            "overlay_opacity": 30,
             "subheading": "Handcrafted home decor",
             "heading": "Decor that tells your story",
-            "text": "Unique pieces for every corner of your living space.",
-            "button_label": "Shop now",
+            "text": "Unique, eco-friendly pieces for every corner of your living space.",
+            "button_label": "Shop the collection",
             "alignment": "left"
           }
         },
         "slide-2": {
           "type": "slide",
           "settings": {
+            "image_file": "hero-2.jpg",
+            "overlay_opacity": 35,
             "subheading": "New arrivals",
-            "heading": "Wall art & mirrors",
-            "text": "Statement pieces, handpicked for you.",
-            "button_label": "Explore",
+            "heading": "Natural materials, timeless style",
+            "text": "Marble, cane, wood and ceramic — thoughtfully made.",
+            "button_label": "Explore new arrivals",
             "alignment": "center"
           }
         }
@@ -27,81 +31,164 @@
       "block_order": ["slide-1", "slide-2"],
       "settings": { "autoplay": true, "speed": 6 }
     },
-    "features": {
+
+    "trust": {
       "type": "icon-features",
       "blocks": {
-        "f1": { "type": "feature", "settings": { "icon": "truck", "title": "Free shipping", "text": "Free delivery on every order." } },
-        "f2": { "type": "feature", "settings": { "icon": "shield", "title": "Price match guarantee", "text": "Find it cheaper? We'll match it." } },
-        "f3": { "type": "feature", "settings": { "icon": "leaf", "title": "Handcrafted quality", "text": "Made by the finest artisans." } },
-        "f4": { "type": "feature", "settings": { "icon": "gift", "title": "Easy returns", "text": "Simple, worry-free returns." } }
+        "t1": { "type": "feature", "settings": { "icon": "truck", "title": "Free Shipping", "text": "On all orders above Rs. 599" } },
+        "t2": { "type": "feature", "settings": { "icon": "gift", "title": "Easy Replacement", "text": "For defective pieces" } },
+        "t3": { "type": "feature", "settings": { "icon": "shield", "title": "Support 10AM–6PM", "text": "Mon–Sat, always here to help" } },
+        "t4": { "type": "feature", "settings": { "icon": "star", "title": "Secure Payments", "text": "UPI / Credit / Debit / Net Banking" } }
       },
-      "block_order": ["f1", "f2", "f3", "f4"],
-      "settings": { "heading": "Why Dekor Company" }
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": { "heading": "", "bg_color": "#ffffff" }
     },
+
     "categories": {
       "type": "collection-list",
       "blocks": {
-        "c1": { "type": "collection", "settings": { "title": "Wall Art" } },
-        "c2": { "type": "collection", "settings": { "title": "Mirrors" } },
-        "c3": { "type": "collection", "settings": { "title": "Showpieces" } },
-        "c4": { "type": "collection", "settings": { "title": "Table Lamps" } }
+        "c1": { "type": "collection", "settings": { "image_file": "category-1.jpg", "title": "Wall Art" } },
+        "c2": { "type": "collection", "settings": { "image_file": "category-2.jpg", "title": "Vases & Planters" } },
+        "c3": { "type": "collection", "settings": { "image_file": "category-3.jpg", "title": "Storage & Organizers" } },
+        "c4": { "type": "collection", "settings": { "image_file": "category-4.jpg", "title": "Lighting & Lamps" } }
       },
       "block_order": ["c1", "c2", "c3", "c4"],
       "settings": { "subheading": "Shop by category", "heading": "Explore our collections", "columns": 4 }
     },
-    "featured": {
-      "type": "featured-collection",
-      "settings": { "subheading": "Handpicked for you", "heading": "Featured products", "products_to_show": 4, "columns": 4 }
+
+    "bestsellers": {
+      "type": "product-showcase",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "image_file": "product-1.jpg", "title": "Rattan Storage Basket", "price": "₹899", "compare_price": "₹1,199" } },
+        "p2": { "type": "product", "settings": { "image_file": "product-2.jpg", "title": "Ceramic Vase Set", "price": "₹1,299" } },
+        "p3": { "type": "product", "settings": { "image_file": "product-3.jpg", "title": "Wooden Wall Shelf", "price": "₹1,499", "compare_price": "₹1,999" } },
+        "p4": { "type": "product", "settings": { "image_file": "product-4.jpg", "title": "Accent Table Lamp", "price": "₹1,899" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": { "subheading": "Most loved", "heading": "Best Sellers!", "columns": 4, "products_to_show": 4, "show_view_all": true, "view_all_label": "Shop all bestsellers" }
     },
-    "banner": {
+
+    "promo": {
       "type": "media-banner",
       "settings": {
-        "subheading": "Our promise",
-        "heading": "Crafted to last a lifetime",
-        "text": "<p>Top-quality raw materials, designed by the finest artisans.</p>",
-        "button_label": "Discover more",
-        "height": 480,
-        "overlay_opacity": 35
+        "image_file": "banner-1.jpg",
+        "height": 460,
+        "overlay_opacity": 40,
+        "subheading": "Featured combo",
+        "heading": "Kitchen Storage Container Combo",
+        "text": "<p>Airtight wooden lids, modern farmhouse design — keep your essentials fresh and beautiful.</p>",
+        "button_label": "Shop now",
+        "alignment": "left"
       }
     },
-    "image-with-text": {
+
+    "newarrivals": {
+      "type": "product-showcase",
+      "blocks": {
+        "n1": { "type": "product", "settings": { "image_file": "product-5.jpg", "title": "Cane Serving Tray", "price": "₹749" } },
+        "n2": { "type": "product", "settings": { "image_file": "product-6.jpg", "title": "Marble Coaster Set", "price": "₹599", "compare_price": "₹799" } },
+        "n3": { "type": "product", "settings": { "image_file": "product-7.jpg", "title": "Decorative Showpiece", "price": "₹1,099" } },
+        "n4": { "type": "product", "settings": { "image_file": "product-8.jpg", "title": "Handwoven Wall Hanging", "price": "₹1,349" } },
+        "n5": { "type": "product", "settings": { "image_file": "product-1.jpg", "title": "Woven Plant Basket", "price": "₹829" } },
+        "n6": { "type": "product", "settings": { "image_file": "product-3.jpg", "title": "Floating Shelf Duo", "price": "₹1,599", "compare_price": "₹2,099" } },
+        "n7": { "type": "product", "settings": { "image_file": "product-2.jpg", "title": "Ceramic Bud Vase", "price": "₹499" } },
+        "n8": { "type": "product", "settings": { "image_file": "product-4.jpg", "title": "Bedside Lamp", "price": "₹1,749" } }
+      },
+      "block_order": ["n1", "n2", "n3", "n4", "n5", "n6", "n7", "n8"],
+      "settings": { "subheading": "Fresh in store", "heading": "New Arrivals!", "columns": 4, "products_to_show": 8, "show_view_all": true, "view_all_label": "Shop all new arrivals" }
+    },
+
+    "vision": {
       "type": "image-with-text",
       "settings": {
-        "subheading": "Our story",
-        "heading": "Designed with the 7 elements of interior design",
-        "text": "<p>Space, line, light, shape, color, pattern, and texture — thoughtfully combined into every piece we make.</p>",
-        "button_label": "Learn more",
-        "layout": "image_first"
+        "image_file": "vision.jpg",
+        "layout": "image_first",
+        "subheading": "Our Vision",
+        "heading": "Towards plastic-free living",
+        "text": "<p>Small changes in our daily lives can have a big impact on the environment. Our products are made of natural, eco-friendly materials that are reusable and easy to clean — so you can create a beautiful space without harming the planet.</p>",
+        "button_label": "Know more",
+        "button_link": "/pages/about"
       }
     },
-    "bestsellers": {
-      "type": "featured-collection",
-      "settings": { "subheading": "Trending now", "heading": "Bestsellers", "products_to_show": 4, "columns": 4 }
+
+    "pillars": {
+      "type": "icon-features",
+      "blocks": {
+        "pl1": { "type": "feature", "settings": { "icon": "leaf", "title": "Sustainable Living", "text": "Eco-conscious, reusable products." } },
+        "pl2": { "type": "feature", "settings": { "icon": "gift", "title": "Local Handcraft & Artisans", "text": "Supporting skilled craftspeople." } },
+        "pl3": { "type": "feature", "settings": { "icon": "leaf", "title": "Natural Materials", "text": "Marble, cane, wood and ceramic." } },
+        "pl4": { "type": "feature", "settings": { "icon": "star", "title": "Women Empowerment", "text": "Creating opportunities that matter." } }
+      },
+      "block_order": ["pl1", "pl2", "pl3", "pl4"],
+      "settings": { "heading": "Our Pillars", "bg_color": "#f2ebe0" }
     },
+
+    "premium": {
+      "type": "product-showcase",
+      "blocks": {
+        "pr1": { "type": "product", "settings": { "image_file": "product-6.jpg", "title": "Marble Trinket Tray", "price": "₹1,899" } },
+        "pr2": { "type": "product", "settings": { "image_file": "product-5.jpg", "title": "Cane Storage Box", "price": "₹2,199" } },
+        "pr3": { "type": "product", "settings": { "image_file": "product-2.jpg", "title": "Marble Vase", "price": "₹2,499", "compare_price": "₹2,999" } },
+        "pr4": { "type": "product", "settings": { "image_file": "product-7.jpg", "title": "Cane Pendant Light", "price": "₹3,299" } }
+      },
+      "block_order": ["pr1", "pr2", "pr3", "pr4"],
+      "settings": { "subheading": "Premium", "heading": "Handcrafted Luxury in Marble & Cane", "columns": 4, "products_to_show": 4, "show_view_all": true, "view_all_label": "Shop premium" }
+    },
+
+    "combo": {
+      "type": "product-showcase",
+      "blocks": {
+        "cb1": { "type": "product", "settings": { "image_file": "product-1.jpg", "title": "Basket Trio Combo", "price": "₹1,999", "compare_price": "₹2,697" } },
+        "cb2": { "type": "product", "settings": { "image_file": "product-3.jpg", "title": "Shelf + Decor Combo", "price": "₹2,499", "compare_price": "₹3,398" } },
+        "cb3": { "type": "product", "settings": { "image_file": "product-8.jpg", "title": "Wall Decor Combo", "price": "₹1,799", "compare_price": "₹2,398" } },
+        "cb4": { "type": "product", "settings": { "image_file": "product-4.jpg", "title": "Lamp + Table Combo", "price": "₹3,499", "compare_price": "₹4,299" } }
+      },
+      "block_order": ["cb1", "cb2", "cb3", "cb4"],
+      "settings": { "subheading": "Save more together", "heading": "Combo Deals!", "columns": 4, "products_to_show": 4, "show_view_all": true, "view_all_label": "Shop all combos" }
+    },
+
     "testimonials": {
       "type": "testimonials",
       "blocks": {
-        "t1": { "type": "testimonial", "settings": { "quote": "Beautiful, high-quality decor that transformed my living room!", "author": "Priya S." } },
-        "t2": { "type": "testimonial", "settings": { "quote": "Fast delivery and the piece looks exactly like the photos.", "author": "Rahul M." } },
-        "t3": { "type": "testimonial", "settings": { "quote": "Exquisite craftsmanship. Conversation starters in my home.", "author": "Ananya K." } }
+        "r1": { "type": "testimonial", "settings": { "quote": "Looks very elegant on my countertop and it is stackable. Changed the look of my kitchen!", "author": "Sujaya S." } },
+        "r2": { "type": "testimonial", "settings": { "quote": "Compact and useful — haven't seen anything like this before. Very convenient.", "author": "Meera R." } },
+        "r3": { "type": "testimonial", "settings": { "quote": "Very classy and elegant. It completely changed the look of my home.", "author": "Ananya K." } }
       },
-      "block_order": ["t1", "t2", "t3"],
-      "settings": { "subheading": "Loved by customers", "heading": "What our customers say", "columns": 3 }
+      "block_order": ["r1", "r2", "r3"],
+      "settings": { "subheading": "Let customers speak for us", "heading": "From 12+ happy reviews", "columns": 3 }
     },
+
+    "mission": {
+      "type": "image-with-text",
+      "settings": {
+        "image_file": "mission.jpg",
+        "layout": "text_first",
+        "subheading": "Our Mission",
+        "heading": "You support us, you support them",
+        "text": "<p>We are more than a business — we are a community driven by sustainable living, supporting artisans, and making a positive impact, while keeping products affordable and ethically sourced.</p>",
+        "button_label": "Know how",
+        "button_link": "/pages/about"
+      }
+    },
+
     "newsletter": {
       "type": "newsletter",
-      "settings": { "subheading": "Stay in touch", "heading": "Join our newsletter", "text": "Sign up for decor inspiration and exclusive offers." }
+      "settings": { "subheading": "Stay in touch", "heading": "Join our newsletter", "text": "Get decor inspiration and exclusive offers." }
     }
   },
   "order": [
     "hero",
-    "features",
+    "trust",
     "categories",
-    "featured",
-    "banner",
-    "image-with-text",
     "bestsellers",
+    "promo",
+    "newarrivals",
+    "vision",
+    "pillars",
+    "premium",
+    "combo",
     "testimonials",
+    "mission",
     "newsletter"
   ]
 }
