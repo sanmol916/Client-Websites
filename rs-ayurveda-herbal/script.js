@@ -138,23 +138,21 @@ updatePrice();
   setInterval(tick, 1000);
 })();
 
-/* ========== WELCOME POPUP (shows once per visit) ========== */
-(function welcomePopup(){
-  const overlay = $("welcomeOverlay");
+/* ========== AGE VERIFICATION GATE (18+) ========== */
+(function ageGate(){
+  const overlay = $("ageOverlay");
   if(!overlay) return;
-  const closeBtn = $("welcomeClose"), cta = $("welcomeCta");
-  const KEY = "rs_welcome_seen";
+  const yes = $("ageYes"), no = $("ageNo");
+  const KEY = "rs_age_confirmed";
   function show(){ overlay.classList.add("open"); overlay.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; }
   function hide(){ overlay.classList.remove("open"); overlay.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
-  // show once per browsing session (per visit)
-  if(!sessionStorage.getItem(KEY)){
-    setTimeout(show, 900);
-    sessionStorage.setItem(KEY, "1");
+  // show on every visit until the visitor confirms they are 18+
+  if(!localStorage.getItem(KEY)){
+    show();
   }
-  closeBtn.addEventListener("click", hide);
-  overlay.addEventListener("click", e=>{ if(e.target===overlay) hide(); });
-  document.addEventListener("keydown", e=>{ if(e.key==="Escape" && overlay.classList.contains("open")) hide(); });
-  cta.addEventListener("click", ()=>{ hide(); const t=document.getElementById("product"); if(t) t.scrollIntoView({behavior:"smooth"}); });
+  yes.addEventListener("click", ()=>{ localStorage.setItem(KEY, "1"); hide(); });
+  no.addEventListener("click", ()=>{ window.location.href = "https://www.google.com"; });
+  // gate is mandatory: no outside-click / Esc dismissal
 })();
 
 /* ========== NAV / HAMBURGER ========== */
@@ -259,8 +257,33 @@ Please confirm my order. Thank you!`;
 
   waSend.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   waSend.target = "_blank"; waSend.rel = "noopener";
+
+  // email the order details to the business inbox (no backend needed)
+  sendOrderEmail(d);
+
   showStep("confirm");
 });
+
+/* ========== EMAIL ORDER TO BUSINESS (FormSubmit.co) ========== */
+const ORDER_EMAIL = "rsayurvedaherbal@gmail.com";
+function sendOrderEmail(d){
+  try{
+    fetch("https://formsubmit.co/ajax/" + ORDER_EMAIL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: "New Order — Horse Power Gold Max",
+        _template: "table",
+        Product: currentOrder.product + " " + currentOrder.price,
+        Name: d.name,
+        Mobile: d.mobile,
+        Email: d.email,
+        Address: d.address,
+        "Pin Code": d.pin
+      })
+    }).catch(()=>{ /* still proceeds to WhatsApp even if email fails */ });
+  }catch(e){ /* ignore */ }
+}
 
 /* ========== GENERAL WHATSAPP LINKS ========== */
 const generalLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi R.S Ayurveda Herbal, I would like to know more about Horse Power Gold Max.")}`;

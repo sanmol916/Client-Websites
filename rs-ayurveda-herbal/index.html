@@ -414,26 +414,20 @@
     </div>
   </div>
 
-  <!-- ================= WELCOME POPUP ================= -->
-  <div class="welcome-overlay" id="welcomeOverlay" aria-hidden="true">
-    <div class="welcome-pop" role="dialog" aria-modal="true">
-      <button class="welcome-close" id="welcomeClose" aria-label="Close">✕</button>
-      <div class="welcome-img">
-        <!-- POPUP IMAGE PLACEHOLDER: replace assets/popup.png -->
-        <div class="img-placeholder welcome-ph">
-          <img src="assets/popup.png" alt="Horse Power Gold Max Offer"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="ph-label"><span>🐎</span>POPUP IMAGE<br /><small>assets/popup.png</small></div>
-        </div>
+  <!-- ================= AGE VERIFICATION GATE ================= -->
+  <div class="age-overlay" id="ageOverlay" aria-hidden="true">
+    <div class="age-card" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+      <div class="age-icon">🌿</div>
+      <h2 class="age-title" id="ageTitle">⚠️ Verification Required</h2>
+      <p class="age-text">
+        This website contains content related to men's health and Ayurvedic wellness.
+        To continue, please confirm that you are <b>18 years of age or older</b>.
+      </p>
+      <div class="age-actions">
+        <button class="btn btn-buy age-yes" id="ageYes">Yes, I am 18+</button>
+        <button class="btn age-exit" id="ageNo">Exit</button>
       </div>
-      <div class="welcome-body">
-        <p class="welcome-eyebrow">R.S AYURVEDA HERBAL • MAN'S CARE</p>
-        <h2 class="welcome-title">Find Your <span class="red">BEST SELF</span> Naturally</h2>
-        <p class="welcome-sub">Special launch offer on Horse Power Gold Max — Oil, Capsules &amp; the money-saving Combo.</p>
-        <div class="welcome-offer">🎉 Combo Deal — Oil + Capsules, Save ₹1,499!</div>
-        <button class="btn btn-buy welcome-cta" id="welcomeCta">🛒 Grab the Offer →</button>
-        <p class="welcome-note">💬 Order easily on WhatsApp • No online payment needed</p>
-      </div>
+      <p class="age-foot">R.S Ayurveda Herbal — Man's Care 🇮🇳</p>
     </div>
   </div>
 
