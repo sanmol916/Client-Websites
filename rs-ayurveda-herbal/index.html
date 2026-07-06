@@ -93,8 +93,11 @@
         <div class="gallery-thumbs" id="galleryThumbs">
           <div class="thumb active" data-img="assets/oil.png"><div class="img-placeholder"><img src="assets/oil.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Oil"/><div class="ph-mini">🧴</div></div></div>
           <div class="thumb" data-img="assets/capsule.png"><div class="img-placeholder"><img src="assets/capsule.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Capsule"/><div class="ph-mini">💊</div></div></div>
+          <div class="thumb" data-img="assets/combo.png"><div class="img-placeholder"><img src="assets/combo.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Combo"/><div class="ph-mini">🎁</div></div></div>
           <div class="thumb" data-img="assets/gallery-1.png"><div class="img-placeholder"><img src="assets/gallery-1.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Lifestyle"/><div class="ph-mini">🌿</div></div></div>
           <div class="thumb" data-img="assets/gallery-2.png"><div class="img-placeholder"><img src="assets/gallery-2.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Ingredients"/><div class="ph-mini">🖼️</div></div></div>
+          <div class="thumb" data-img="assets/gallery-3.png"><div class="img-placeholder"><img src="assets/gallery-3.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Usage"/><div class="ph-mini">📷</div></div></div>
+          <div class="thumb" data-img="assets/gallery-4.png"><div class="img-placeholder"><img src="assets/gallery-4.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Results"/><div class="ph-mini">✨</div></div></div>
         </div>
       </div>
 
@@ -119,6 +122,7 @@
           <div class="type-toggle" id="typeToggle">
             <button class="type-btn active" data-type="Oil" data-img="assets/oil.png">🧴 Oil</button>
             <button class="type-btn" data-type="Capsules" data-img="assets/capsule.png">💊 Capsules (30)</button>
+            <button class="type-btn combo-btn" data-type="Combo" data-img="assets/combo.png">🎁 Combo: Oil + Capsules <span class="combo-tag">BEST VALUE • SAVE ₹1,499</span></button>
           </div>
           <p class="pack-note" id="packNote">Horse Power Gold Max Oil — 1 Bottle</p>
         </div>
@@ -129,6 +133,16 @@
             <span class="ps-old" id="psOld">₹1,499</span>
           </div>
           <span class="ps-save" id="psSave">You save ₹500</span>
+        </div>
+
+        <!-- Offer countdown timer -->
+        <div class="offer-timer" id="offerTimer">
+          <span class="ot-label">⏰ Hurry! Offer ends in</span>
+          <div class="ot-clock">
+            <span class="ot-unit"><b id="otMin">30</b><small>MIN</small></span>
+            <span class="ot-colon">:</span>
+            <span class="ot-unit"><b id="otSec">00</b><small>SEC</small></span>
+          </div>
         </div>
 
         <button class="btn btn-buy" id="buyNowBtn">🛒 BUY NOW →</button>
@@ -397,6 +411,29 @@
         <button class="btn btn-ghost btn-full" id="backToForm">← Edit Details</button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ================= WELCOME POPUP ================= -->
+  <div class="welcome-overlay" id="welcomeOverlay" aria-hidden="true">
+    <div class="welcome-pop" role="dialog" aria-modal="true">
+      <button class="welcome-close" id="welcomeClose" aria-label="Close">✕</button>
+      <div class="welcome-img">
+        <!-- POPUP IMAGE PLACEHOLDER: replace assets/popup.png -->
+        <div class="img-placeholder welcome-ph">
+          <img src="assets/popup.png" alt="Horse Power Gold Max Offer"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="ph-label"><span>🐎</span>POPUP IMAGE<br /><small>assets/popup.png</small></div>
+        </div>
+      </div>
+      <div class="welcome-body">
+        <p class="welcome-eyebrow">R.S AYURVEDA HERBAL • MAN'S CARE</p>
+        <h2 class="welcome-title">Find Your <span class="red">BEST SELF</span> Naturally</h2>
+        <p class="welcome-sub">Special launch offer on Horse Power Gold Max — Oil, Capsules &amp; the money-saving Combo.</p>
+        <div class="welcome-offer">🎉 Combo Deal — Oil + Capsules, Save ₹1,499!</div>
+        <button class="btn btn-buy welcome-cta" id="welcomeCta">🛒 Grab the Offer →</button>
+        <p class="welcome-note">💬 Order easily on WhatsApp • No online payment needed</p>
+      </div>
     </div>
   </div>
 

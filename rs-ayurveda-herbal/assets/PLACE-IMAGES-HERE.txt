@@ -12,10 +12,16 @@ BRANDING
 PRODUCTS
   oil.png        -> Horse Power Gold Max OIL product image.
   capsule.png    -> Horse Power Gold Max CAPSULES product image.
+  combo.png      -> COMBO (Oil + Capsules together) product image.
 
-PRODUCT GALLERY (thumbnails under the main image)
+WELCOME POPUP (shows once when a visitor arrives)
+  popup.png      -> Promo/banner image for the welcome popup.
+
+PRODUCT GALLERY SLIDER (7 thumbnails under the main image)
   gallery-1.png  -> Extra product / lifestyle photo.
   gallery-2.png  -> Extra product / ingredients photo.
+  gallery-3.png  -> Extra usage / lifestyle photo.
+  gallery-4.png  -> Extra results / benefit photo.
 
 BENEFITS SECTION
   benefit-1.png  -> "Supports Daily Strength" image.

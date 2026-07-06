@@ -23,7 +23,16 @@ const PRODUCTS = {
     price: 1499,
     old: 1999,
   },
+  Combo: {
+    label: "Horse Power Gold Max Combo (Oil + Capsules)",
+    img: "assets/combo.png",
+    qty: "Oil + 30 Capsules",
+    price: 1999,
+    old: 3498,
+  },
 };
+
+const TYPE_EMOJI = { Oil: "🧴", Capsules: "💊", Combo: "🎁" };
 
 let selectedType = "Oil";
 
@@ -68,7 +77,7 @@ document.querySelectorAll(".type-btn").forEach(btn=>{
     document.querySelectorAll(".type-btn").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
     selectedType = btn.dataset.type;
-    setMainImage(btn.dataset.img, selectedType==="Oil"?"🧴":"💊");
+    setMainImage(btn.dataset.img, TYPE_EMOJI[selectedType] || "📸");
     // sync gallery thumbs active
     document.querySelectorAll(".thumb").forEach(t=>t.classList.toggle("active", t.dataset.img===btn.dataset.img));
     updatePrice();
@@ -99,6 +108,53 @@ updatePrice();
     lv.textContent = visitors.toLocaleString("en-IN");
   }, 3000);
   setInterval(()=>{ sold += Math.random()>.6?1:0; sr.textContent = sold; }, 9000);
+})();
+
+/* ========== OFFER COUNTDOWN TIMER (~30 min) ========== */
+(function offerTimer(){
+  const minEl = $("otMin"), secEl = $("otSec");
+  if(!minEl || !secEl) return;
+  const DURATION = 30 * 60 * 1000;      // 30 minutes
+  const KEY = "rs_offer_deadline";
+  let deadline = parseInt(localStorage.getItem(KEY), 10);
+  // start (or restart) the 30-min offer if none is stored or it already expired
+  if(!deadline || isNaN(deadline) || deadline <= Date.now()){
+    deadline = Date.now() + DURATION;
+    localStorage.setItem(KEY, deadline);
+  }
+  function tick(){
+    let diff = deadline - Date.now();
+    if(diff <= 0){                       // keep the urgency alive: reset to 30 min
+      deadline = Date.now() + DURATION;
+      localStorage.setItem(KEY, deadline);
+      diff = DURATION;
+    }
+    const m = Math.floor(diff / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    minEl.textContent = String(m).padStart(2, "0");
+    secEl.textContent = String(s).padStart(2, "0");
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ========== WELCOME POPUP (shows once per visit) ========== */
+(function welcomePopup(){
+  const overlay = $("welcomeOverlay");
+  if(!overlay) return;
+  const closeBtn = $("welcomeClose"), cta = $("welcomeCta");
+  const KEY = "rs_welcome_seen";
+  function show(){ overlay.classList.add("open"); overlay.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; }
+  function hide(){ overlay.classList.remove("open"); overlay.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
+  // show once per browsing session (per visit)
+  if(!sessionStorage.getItem(KEY)){
+    setTimeout(show, 900);
+    sessionStorage.setItem(KEY, "1");
+  }
+  closeBtn.addEventListener("click", hide);
+  overlay.addEventListener("click", e=>{ if(e.target===overlay) hide(); });
+  document.addEventListener("keydown", e=>{ if(e.key==="Escape" && overlay.classList.contains("open")) hide(); });
+  cta.addEventListener("click", ()=>{ hide(); const t=document.getElementById("product"); if(t) t.scrollIntoView({behavior:"smooth"}); });
 })();
 
 /* ========== NAV / HAMBURGER ========== */
