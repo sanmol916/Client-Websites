@@ -16,13 +16,15 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+html{scroll-behavior:smooth;scroll-padding-top:90px;overflow-x:hidden}
 body{
   font-family:'Poppins',sans-serif;
   background:var(--white);
   color:var(--ink);
   line-height:1.6;
   overflow-x:hidden;
+  width:100%;
+  position:relative;
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -73,6 +75,7 @@ img{max-width:100%;display:block}
 }
 .header-call:hover{background:var(--red-2)}
 .hamburger{display:none;background:none;border:none;color:var(--ink);font-size:1.5rem;cursor:pointer}
+.nav-backdrop{display:none}
 
 /* ============ HERO ============ */
 .hero{
@@ -103,12 +106,14 @@ img{max-width:100%;display:block}
   border:2px dashed var(--red);
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
-.img-placeholder img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.img-placeholder img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2}
 /* once a real image loads, drop the dashed placeholder styling & hide the label */
 .img-placeholder.loaded{border:none;background:transparent}
 .img-placeholder.loaded .ph-label,.img-placeholder.loaded .ph-mini{display:none}
-/* product packshots show fully (no crop); photos fill */
-.gallery-main-ph img,.thumb img{object-fit:contain}
+/* product packshots & the main gallery image show fully (never crop the model/face) */
+.gallery-main-ph img,.thumb img{object-fit:contain;object-position:center}
+/* hero product bottles stay centered */
+.hero-ph img{object-position:center}
 .ph-label{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9a9a9a;font-weight:700;text-align:center;font-size:.9rem;letter-spacing:1px;padding:8px}
 .ph-label span{font-size:2.4rem;margin-bottom:6px}
 .ph-label small{color:#bbb;font-weight:400;font-size:.66rem;margin-top:4px}
@@ -389,9 +394,11 @@ img{max-width:100%;display:block}
   .benefits-grid,.process-grid{grid-template-columns:1fr}
   .reviews-summary{grid-template-columns:1fr;gap:20px;text-align:center}
   .rs-action{order:3}
-  .nav{position:fixed;top:0;right:-100%;height:100vh;width:70%;max-width:280px;background:#fff;flex-direction:column;padding:80px 30px;gap:20px;transition:right .3s;border-left:1px solid var(--line);z-index:70;box-shadow:-10px 0 30px rgba(0,0,0,.1)}
-  .nav.open{right:0}
+  .nav{position:fixed;top:0;right:0;height:100vh;width:74%;max-width:290px;background:#fff;flex-direction:column;padding:80px 30px;gap:20px;transform:translateX(110%);transition:transform .3s ease;border-left:1px solid var(--line);z-index:70;box-shadow:-10px 0 30px rgba(0,0,0,.15)}
+  .nav.open{transform:translateX(0)}
   .nav a{font-size:1.1rem}
+  .nav-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:65;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .nav-backdrop.open{opacity:1;visibility:visible}
   .hamburger{display:block}
   .footer-inner{grid-template-columns:1fr 1fr}
   .mobile-buybar{display:flex}

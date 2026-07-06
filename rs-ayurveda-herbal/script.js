@@ -156,9 +156,12 @@ updatePrice();
 })();
 
 /* ========== NAV / HAMBURGER ========== */
-const nav = $("nav"), hamburger = $("hamburger");
-hamburger.addEventListener("click",()=>nav.classList.toggle("open"));
-nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
+const nav = $("nav"), hamburger = $("hamburger"), navBackdrop = $("navBackdrop");
+function openNav(){ nav.classList.add("open"); if(navBackdrop) navBackdrop.classList.add("open"); }
+function closeNav(){ nav.classList.remove("open"); if(navBackdrop) navBackdrop.classList.remove("open"); }
+hamburger.addEventListener("click",()=>{ nav.classList.contains("open") ? closeNav() : openNav(); });
+if(navBackdrop) navBackdrop.addEventListener("click", closeNav);
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeNav));
 
 /* ========== FAQ ACCORDION ========== */
 document.querySelectorAll(".faq-q").forEach(q=>{
