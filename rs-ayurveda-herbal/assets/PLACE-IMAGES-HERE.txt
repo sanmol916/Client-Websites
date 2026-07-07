@@ -30,6 +30,20 @@ HOW TO USE / PROCESS SECTION
   step-2.png     -> Step 2 image.
   step-3.png     -> Step 3 image.
 
+KEY INGREDIENTS SECTION (small icons, ~120x120)
+  ing-ashwagandha.png -> Ashwagandha Root icon.
+  ing-shilajit.png    -> Shilajit icon.
+  ing-gokshura.png    -> Gokshura icon.
+  ing-kaunch.png      -> Kaunch Beej icon.
+  ing-musli.png       -> Safed Musli icon.
+  ing-shatavari.png   -> Shatavari icon.
+
+CERTIFICATION BADGES (round badges, ~200x200)
+  cert-ayush.png      -> AYUSH badge.
+  cert-fda.png        -> FDA Approved badge.
+  cert-gmp.png        -> GMP Quality badge.
+  cert-ayurvedic.png  -> Pure Ayurvedic / Made in India badge.
+
 Notes:
 - Recommended format: PNG or JPG. Keep file names lowercase.
 - Until a file is added, a labeled placeholder box is shown in its place.
