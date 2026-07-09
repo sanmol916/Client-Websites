@@ -39,12 +39,12 @@
             const open = fab.classList.toggle('open', force);
             fabToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         };
-        // Start open so all options are visible, matching the design.
-        toggleFab(true);
+        // Open by default on larger screens; collapsed on mobile so it never covers content.
+        toggleFab(window.innerWidth > 768);
         fabToggle.addEventListener('click', () => toggleFab());
         // Collapse the menu after tapping an action on mobile.
         fab.querySelectorAll('.fab__btn').forEach((b) => b.addEventListener('click', () => {
-            if (window.innerWidth <= 560) toggleFab(false);
+            if (window.innerWidth <= 768) toggleFab(false);
         }));
     }
 

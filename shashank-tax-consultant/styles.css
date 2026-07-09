@@ -601,29 +601,86 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; font-weight: 
 }
 
 @media (max-width: 768px) {
+    .topbar { font-size: 0.8rem; }
     .topbar__contact .topbar__item:last-child { display: none; }
+    .topbar__inner { height: 40px; }
+    .header__inner { height: 66px; }
+    .brand__logo { width: 42px; height: 42px; }
+    .brand__text strong { font-size: 0.98rem; }
     .nav {
-        position: fixed; inset: 0 0 0 auto; width: min(80%, 320px);
+        position: fixed; inset: 0 0 0 auto; width: min(82%, 320px);
         background: var(--white); flex-direction: column; align-items: stretch; justify-content: flex-start;
-        padding: 100px 26px 40px; gap: 6px; box-shadow: -20px 0 60px rgba(11,36,71,0.18);
+        padding: 96px 26px 40px; gap: 6px; box-shadow: -20px 0 60px rgba(11,36,71,0.18);
         transform: translateX(100%); transition: transform 0.4s var(--ease); z-index: 99;
     }
     .nav.open { transform: translateX(0); }
     .nav__link { padding: 13px 16px; font-size: 1rem; }
     .nav__cta { margin: 12px 0 0; text-align: center; }
     .nav__toggle { display: flex; z-index: 100; }
-    .stats__grid { grid-template-columns: repeat(2, 1fr); gap: 26px 0; }
-    .stat:nth-child(3) { border-left: none; }
+
+    /* Hero: tighter layout, badges pinned to real corners so they don't cover the image */
+    .hero { padding: 40px 0 56px; }
+    .hero__title { margin: 18px 0 16px; }
+    .hero__subtitle { font-size: 1rem; }
+    .hero__actions { margin: 26px 0 24px; gap: 12px; }
+    .hero__visual { max-width: 380px; }
+    .img-ph--hero { aspect-ratio: 3 / 2.5; padding: 20px; }
+    .img-ph__icon { width: 42px; height: 42px; }
+    .hero__badge { padding: 9px 12px; gap: 9px; border-radius: 12px; }
+    .hero__badge strong { font-size: 0.8rem; }
+    .hero__badge span { font-size: 0.68rem; }
+    .hero__badge-icon { width: 32px; height: 32px; font-size: 0.9rem; }
+    .hero__badge--1 { top: 10px; left: 10px; }
+    .hero__badge--2 { bottom: 10px; right: 10px; }
+
+    /* Stats: 2x2 with breathing room, labels never clipped */
+    .stats { margin-top: -36px; }
+    .stats__grid { grid-template-columns: repeat(2, 1fr); gap: 30px 10px; padding: 32px 20px; }
     .stat:nth-child(odd) { border-left: none; }
+    .stat__label { font-size: 0.82rem; line-height: 1.3; }
+
+    /* Value cards / grids stack to 2 then 1 */
+    .value-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 560px) {
     .services__grid, .why__grid, .process__grid, .value-cards { grid-template-columns: 1fr; }
-    .footer__grid { grid-template-columns: 1fr; }
+    .footer__grid { grid-template-columns: 1fr; gap: 28px; }
     .field-row { grid-template-columns: 1fr; }
-    .hero__badge--1 { left: 0; }
-    .hero__badge--2 { right: 0; }
     .cta-banner__inner { flex-direction: column; align-items: flex-start; }
+    .cta-banner__inner .btn { width: 100%; }
+
+    /* Full-width, easy-tap buttons */
+    .hero__actions { flex-direction: column; align-items: stretch; }
+    .hero__actions .btn { width: 100%; }
+    .quick-actions__btns { flex-direction: column; }
+    .quick-actions__btns .btn { width: 100%; }
+
+    /* Section spacing a touch tighter on phones */
+    .section { padding: 52px 0; }
+    .section__head { margin-bottom: 36px; }
+
+    /* Contact list & socials */
+    .contact__socials a { flex: 1 1 auto; justify-content: center; }
+    .footer__bottom-inner { flex-direction: column; text-align: center; gap: 6px; }
+
+    /* Booking chips fit small screens */
+    .date-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
+    .slot-grid { grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); }
+
+    /* Smaller floating buttons so they don't crowd content */
+    .fab { bottom: 18px; right: 16px; gap: 12px; }
+    .fab__btn { width: 46px; height: 46px; }
+    .fab__btn svg { width: 22px; height: 22px; }
+    .fab__toggle { width: 54px; height: 54px; }
+    .fab__toggle svg { width: 24px; height: 24px; }
+}
+
+@media (max-width: 380px) {
+    .hero__title { font-size: 1.95rem; }
+    .stats__grid { gap: 26px 6px; }
+    .stat__num { font-size: 1.75rem; }
+    .hero__badge span { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
