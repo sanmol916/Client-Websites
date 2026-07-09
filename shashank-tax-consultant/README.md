@@ -1,6 +1,6 @@
 # Shashank Tax Consultant — Demo Website
 
-A premium, fully responsive single-page website built for **Shashank Tax Consultant**, led by **CMA Shashank Soni (ACMA)**, Telibagh, Lucknow.
+A premium, fully responsive single-page website built for **Shashank Tax Consultant**, led by **CMA Shashank Soni**, Telibagh, Lucknow.
 
 ## ✨ Highlights to show the client
 - Professional finance aesthetic (deep navy + gold) with modern typography (Sora + Plus Jakarta Sans)
@@ -8,7 +8,7 @@ A premium, fully responsive single-page website built for **Shashank Tax Consult
 - Sticky glass navigation + mobile slide-in menu
 - Animated stat counters (years, clients, compliance rate)
 - Scroll-reveal animations throughout
-- 9 detailed service cards (GST, Income Tax, Cost Audit, Accounting, Company/LLP, TDS/TCS, MSME & Startup, Payroll, Advisory)
+- 8 detailed service cards (GST, Income Tax, Accounting, Company/LLP, TDS/TCS, MSME & Startup, Payroll, Advisory)
 - Why-Us, How-It-Works (dark section) and testimonials sections
 - Contact form (opens email to the consultant) + full address, click-to-call & social links
 - Floating call button
