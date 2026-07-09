@@ -37,5 +37,17 @@ To swap an image placeholder, replace the `<div class="img-ph ...">` block with 
 - **Services & content:** in the Services section of `index.html`
 - **Colors:** edit the `:root` variables at the top of `styles.css`
 
+## 📅 Booking page (`booking.html`)
+Clicking any **Book Consultation** button opens a dedicated booking page with:
+- **Call Now** (immediate help) and **Proceed to Booking** quick actions
+- Value cards (Client-Centred, Compliance First, Focused Sessions) + a "How Booking Works" flow
+- An interactive **slot picker**: choose a date (next 12 working days, Sundays skipped) and a time slot, add your details, and confirm via **WhatsApp** or **Email** (slot details pre-filled)
+
+## 🟢 Floating action buttons
+Every page has a floating speed-dial (bottom-right) with **Call**, **WhatsApp**, and **Book a Slot** icons. Tap the main button to expand/collapse. Update the WhatsApp number by editing the `WHATSAPP` constant in `script.js` and the `wa.me/...` links in the HTML.
+
+## 🔤 Font
+The site uses **Lato** (Google Fonts). To change it, edit the `<link>` in each HTML `<head>` and the `--font-head` / `--font-body` variables in `styles.css`.
+
 ## 🚀 Run it
 Just open `index.html` in any browser — no build step required.
