@@ -420,6 +420,15 @@
         <p><a href="#reviews">Reviews</a></p>
         <p><a href="#faq">FAQ</a></p>
       </div>
+      <div class="footer-col">
+        <h4>Information</h4>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="track-order.html">Track Your Order</a></p>
+        <p><a href="delivery.html">Delivery Information</a></p>
+        <p><a href="privacy.html">Privacy Policy</a></p>
+        <p><a href="refund.html">Return &amp; Refund Policy</a></p>
+        <p><a href="terms.html">Terms &amp; Conditions</a></p>
+      </div>
     </div>
     <div class="footer-bottom">© <span id="year"></span> R.S Ayurveda Herbal Man's Care. All rights reserved.</div>
   </footer>
@@ -464,8 +473,20 @@
           </div>
           <div class="field">
             <label for="fAddress">Address *</label>
-            <textarea id="fAddress" name="address" rows="3" placeholder="House no., street, area, city, state" required></textarea>
+            <textarea id="fAddress" name="address" rows="2" placeholder="House no., street, area" required></textarea>
             <small class="err" data-for="fAddress"></small>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="fCity">City *</label>
+              <input type="text" id="fCity" name="city" placeholder="City" required />
+              <small class="err" data-for="fCity"></small>
+            </div>
+            <div class="field">
+              <label for="fState">State *</label>
+              <input type="text" id="fState" name="state" placeholder="State" required />
+              <small class="err" data-for="fState"></small>
+            </div>
           </div>
           <div class="field">
             <label for="fPin">Pin Code *</label>
@@ -510,6 +531,7 @@
     </div>
   </div>
 
+  <script src="meta-tracking.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

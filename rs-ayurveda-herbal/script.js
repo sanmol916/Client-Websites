@@ -188,6 +188,7 @@ const backToForm  = $("backToForm");
 
 let currentOrder = { product:"", price:"" };
 
+let checkoutTracked = false;
 function openBuy(){
   const p = PRODUCTS[selectedType];
   currentOrder.product = p.label + " (" + p.qty + ")";
@@ -196,9 +197,26 @@ function openBuy(){
   selPrice.textContent   = currentOrder.price;
   showStep("form");
   openModal();
+  checkoutTracked = false;
+  // ===== Meta: AddToCart event =====
+  if(window.rsTrack){
+    rsTrack("AddToCart", { customData: { content_name: p.label, currency: "INR", value: p.price } });
+  }
 }
 $("buyNowBtn").addEventListener("click", openBuy);
 $("mobileBuyBtn").addEventListener("click", openBuy);
+
+// ===== Meta: InitiateCheckout on first interaction with the order form =====
+["fName","fMobile","fEmail","fAddress","fCity","fState","fPin"].forEach(id=>{
+  const el = $(id);
+  if(el) el.addEventListener("focus", ()=>{
+    if(!checkoutTracked && window.rsTrack){
+      checkoutTracked = true;
+      const p = PRODUCTS[selectedType];
+      rsTrack("InitiateCheckout", { customData: { content_name: p.label, currency: "INR", value: p.price } });
+    }
+  });
+});
 
 function openModal(){ modal.classList.add("open"); modal.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; }
 function closeModal(){ modal.classList.remove("open"); modal.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
@@ -223,7 +241,9 @@ function validateForm(d){
   if(!d.name || d.name.trim().length<2){ setError("fName","Please enter your name"); ok=false; } else setError("fName");
   if(!/^[6-9]\d{9}$/.test(d.mobile)){ setError("fMobile","Enter a valid 10-digit mobile number"); ok=false; } else setError("fMobile");
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){ setError("fEmail","Enter a valid email address"); ok=false; } else setError("fEmail");
-  if(!d.address || d.address.trim().length<8){ setError("fAddress","Please enter your full address"); ok=false; } else setError("fAddress");
+  if(!d.address || d.address.trim().length<5){ setError("fAddress","Please enter your address"); ok=false; } else setError("fAddress");
+  if(!d.city || d.city.trim().length<2){ setError("fCity","Please enter your city"); ok=false; } else setError("fCity");
+  if(!d.state || d.state.trim().length<2){ setError("fState","Please enter your state"); ok=false; } else setError("fState");
   if(!/^\d{6}$/.test(d.pin)){ setError("fPin","Enter a valid 6-digit pin code"); ok=false; } else setError("fPin");
   return ok;
 }
@@ -233,7 +253,7 @@ orderForm.addEventListener("submit", e=>{
   e.preventDefault();
   const d = {
     name:$("fName").value.trim(), mobile:$("fMobile").value.trim(), email:$("fEmail").value.trim(),
-    address:$("fAddress").value.trim(), pin:$("fPin").value.trim(),
+    address:$("fAddress").value.trim(), city:$("fCity").value.trim(), state:$("fState").value.trim(), pin:$("fPin").value.trim(),
   };
   if(!validateForm(d)) return;
 
@@ -243,6 +263,8 @@ orderForm.addEventListener("submit", e=>{
     <div class="row"><span class="k">Mobile</span><span class="v">${esc(d.mobile)}</span></div>
     <div class="row"><span class="k">Email</span><span class="v">${esc(d.email)}</span></div>
     <div class="row"><span class="k">Address</span><span class="v">${esc(d.address)}</span></div>
+    <div class="row"><span class="k">City</span><span class="v">${esc(d.city)}</span></div>
+    <div class="row"><span class="k">State</span><span class="v">${esc(d.state)}</span></div>
     <div class="row"><span class="k">Pin Code</span><span class="v">${esc(d.pin)}</span></div>`;
 
   const message =
@@ -254,6 +276,8 @@ orderForm.addEventListener("submit", e=>{
 *Mobile:* ${d.mobile}
 *Email:* ${d.email}
 *Address:* ${d.address}
+*City:* ${d.city}
+*State:* ${d.state}
 *Pin Code:* ${d.pin}
 --------------------------------
 Please confirm my order. Thank you!`;
@@ -263,6 +287,28 @@ Please confirm my order. Thank you!`;
 
   // email the order details to the business inbox (no backend needed)
   sendOrderEmail(d);
+
+  // ===== Meta: Purchase event (COD order placed on form submit) =====
+  if(window.rsTrack){
+    const nameParts = d.name.split(/\s+/);
+    rsTrack("Purchase", {
+      userData: {
+        email: d.email,
+        phone: "91" + d.mobile,
+        firstName: nameParts[0] || "",
+        lastName: nameParts.slice(1).join(" "),
+        zip: d.pin,
+        city: d.city,
+        state: d.state,
+        country: "India",
+      },
+      customData: {
+        content_name: currentOrder.product,
+        currency: "INR",
+        value: PRODUCTS[selectedType].price,
+      },
+    });
+  }
 
   showStep("confirm");
 });
