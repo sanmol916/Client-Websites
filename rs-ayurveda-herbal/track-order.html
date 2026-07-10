@@ -43,6 +43,25 @@
       <a href="index.html" class="policy-back">← Back to Home</a>
       <h1 class="policy-title">Track Your Order</h1>
       <div class="policy-body">
+
+        <!-- Shipment tracking widget -->
+        <div class="track-widget">
+          <div class="track-widget-head">
+            <span class="track-widget-icon">📦</span>
+            <h2>Track status of your shipment</h2>
+          </div>
+          <form id="trackForm" class="track-form" novalidate>
+            <div class="track-searchby">
+              <span class="track-label">Search By:</span>
+              <label class="track-radio"><input type="radio" name="trackType" value="order" checked /> <span>Order ID</span></label>
+              <label class="track-radio"><input type="radio" name="trackType" value="awb" /> <span>AWB</span></label>
+            </div>
+            <input type="text" id="trackInput" class="track-input" placeholder="Enter Order ID to search" autocomplete="off" />
+            <button type="submit" class="btn btn-buy track-submit">Submit</button>
+          </form>
+          <p class="track-hint">Enter your <b>Order ID</b> to get the latest status from our team on WhatsApp, or choose <b>AWB</b> to open live courier tracking for your tracking number.</p>
+        </div>
+
         <p>All orders on our website are placed and confirmed over <b>WhatsApp</b>, and we ship on a <b>Cash on Delivery (COD)</b> basis. Tracking your order is quick and easy.</p>
 
         <h2>How Order Tracking Works</h2>
@@ -111,6 +130,33 @@
     if(b)b.addEventListener('click',c);
     if(n)n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',c);});
     var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();})();
+
+    /* ===== Shipment tracking widget ===== */
+    (function(){
+      var form=document.getElementById('trackForm'); if(!form) return;
+      var input=document.getElementById('trackInput');
+      var WA='919582771432';
+      // Live courier tracking URL for AWB. Change this to your courier if you don't use Shiprocket
+      // e.g. Delhivery: https://www.delhivery.com/track/package/{value}
+      var AWB_TRACK_URL='https://shiprocket.co/tracking/{value}';
+      function selType(){var r=document.querySelector('input[name="trackType"]:checked');return r?r.value:'order';}
+      Array.prototype.forEach.call(document.querySelectorAll('input[name="trackType"]'),function(r){
+        r.addEventListener('change',function(){
+          input.placeholder = selType()==='awb' ? 'Enter AWB / Tracking number to search' : 'Enter Order ID to search';
+        });
+      });
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var val=(input.value||'').trim();
+        if(!val){ input.focus(); return; }
+        if(selType()==='awb'){
+          window.open(AWB_TRACK_URL.replace('{value}', encodeURIComponent(val)), '_blank', 'noopener');
+        } else {
+          var msg='Hi R.S Ayurveda Herbal, please share the tracking status of my order. Order ID: '+val;
+          window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg), '_blank', 'noopener');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
