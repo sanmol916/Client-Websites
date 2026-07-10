@@ -6,5 +6,6 @@
  */
 module.exports = (req, res) => {
   res.setHeader("Cache-Control", "public, max-age=300");
-  res.status(200).json({ pixelId: process.env.META_PIXEL_ID || "" });
+  // Pixel ID is public (it appears in the browser anyway). Env var can override it.
+  res.status(200).json({ pixelId: process.env.META_PIXEL_ID || "1562080155308094" });
 };

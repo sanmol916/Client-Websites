@@ -50,11 +50,12 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const PIXEL_ID = process.env.META_PIXEL_ID;
+  // Pixel ID is public; the Access Token is the secret and MUST come from an env var.
+  const PIXEL_ID = process.env.META_PIXEL_ID || "1562080155308094";
   const TOKEN = process.env.META_CAPI_TOKEN;
 
-  // If not configured yet, fail softly so the site keeps working.
-  if (!PIXEL_ID || !TOKEN) {
+  // Fail softly until the Access Token is configured (site keeps working).
+  if (!TOKEN) {
     res.status(200).json({ ok: false, reason: "not_configured" });
     return;
   }
