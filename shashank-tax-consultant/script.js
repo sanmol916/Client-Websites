@@ -99,9 +99,9 @@
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = form.name.value.trim();
-            const phone = form.phone.value.trim();
-            const email = form.email.value.trim();
+            const name = form.elements['name'].value.trim();
+            const phone = form.elements['phone'].value.trim();
+            const email = form.elements['email'].value.trim();
 
             if (!name || !phone || !email) {
                 note.hidden = false;
@@ -113,8 +113,8 @@
             }
 
             // Compose a mailto fallback so the message reaches the consultant.
-            const service = form.service.value || 'General Enquiry';
-            const message = form.message.value.trim();
+            const service = form.elements['service'].value || 'General Enquiry';
+            const message = form.elements['message'].value.trim();
             const subject = encodeURIComponent(`New enquiry: ${service} — ${name}`);
             const body = encodeURIComponent(
                 `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`

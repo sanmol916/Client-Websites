@@ -10,6 +10,7 @@ A premium, fully responsive single-page website built for **Shashank Tax Consult
 - Scroll-reveal animations throughout
 - 8 detailed service cards (GST, Income Tax, Accounting, Company/LLP, TDS/TCS, MSME & Startup, Payroll, Advisory) — each opens its **own dedicated service page**
 - Individual service pages (`service.html?s=<slug>`) with About, Who Needs This, Why It's Important, Key Benefits, Documents Required, Process, and FAQs
+- Dedicated **About** (`about.html`) and **Contact** (`contact.html`) pages — the latter with a working form, quick-contact cards, and an embedded map
 - Why-Us, How-It-Works (dark section) and testimonials sections
 - Contact form (opens email to the consultant) + full address, click-to-call & social links
 - Floating call button
