@@ -325,6 +325,15 @@ img.avatar-ph { object-fit: cover; }
 .service-card:hover .service-card__icon svg { fill: var(--gold-400); }
 .service-card h3 { font-size: 1.12rem; margin-bottom: 10px; }
 .service-card p { font-size: 0.92rem; color: var(--slate); }
+.service-card__more {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;
+    font-weight: 700; font-size: 0.9rem; color: var(--navy-600);
+    opacity: 0; transform: translateX(-6px); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), gap 0.25s;
+}
+.service-card__more svg { width: 18px; height: 18px; fill: currentColor; }
+.service-card:hover .service-card__more { opacity: 1; transform: none; }
+.service-card:hover .service-card__more { gap: 10px; }
+@media (hover: none) { .service-card__more { opacity: 1; transform: none; } }
 
 /* ---------- Why ---------- */
 .why__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
@@ -590,6 +599,63 @@ img.avatar-ph { object-fit: cover; }
 [data-reveal].is-visible { opacity: 1; transform: none; }
 
 /* ============================================================
+   Service detail page
+   ============================================================ */
+.container--narrow { max-width: 860px; }
+
+.svc-hero__icon {
+    display: inline-grid; place-items: center; width: 74px; height: 74px; margin: 0 auto 6px;
+    border-radius: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+}
+.svc-hero__icon svg { width: 38px; height: 38px; fill: var(--gold-400); }
+.subpage-hero__actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+.subpage-hero__actions .btn--ghost { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.35); }
+
+/* About + sidebar */
+.svc-about__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(30px, 5vw, 56px); align-items: start; }
+.svc-about__text { color: var(--slate); font-size: 1.06rem; margin-top: 16px; }
+.svc-sidebar { display: grid; gap: 20px; }
+.svc-side-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 26px; box-shadow: var(--shadow-sm);
+}
+.svc-side-card--gold { background: linear-gradient(160deg, #fff9ec, #fdf1d6); border-color: #f0dcae; }
+.svc-side-card__icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: var(--bg-navy-soft); margin-bottom: 14px; }
+.svc-side-card__icon svg { width: 24px; height: 24px; fill: var(--navy-600); }
+.svc-side-card--gold .svc-side-card__icon { background: rgba(201,162,75,0.2); }
+.svc-side-card--gold .svc-side-card__icon svg { fill: var(--gold-500); }
+.svc-side-card h3 { font-size: 1.12rem; margin-bottom: 8px; }
+.svc-side-card p { color: var(--slate); font-size: 0.94rem; }
+
+/* Benefits: green tick icon */
+.svc-benefits .value-card { text-align: left; }
+.svc-benefits .value-card__icon { margin: 0 0 16px; background: rgba(15,155,142,0.12); border-radius: 12px; }
+.svc-benefits .value-card__icon svg { fill: var(--teal-500); width: 26px; height: 26px; }
+.svc-benefits .value-card h3 { font-size: 1.08rem; }
+
+/* Documents + process */
+.svc-docproc__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 56px); align-items: start; }
+.doc-list { margin-top: 22px; display: grid; gap: 14px; }
+.doc-list li { display: flex; gap: 13px; align-items: flex-start; color: var(--ink); font-weight: 500; }
+.doc-tick { flex-shrink: 0; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: rgba(15,155,142,0.14); color: var(--teal-500); font-size: 0.78rem; font-weight: 700; margin-top: 2px; }
+.svc-proc .steps-list { margin-top: 22px; }
+
+/* FAQ accordion */
+.faq { display: grid; gap: 14px; }
+.faq__item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; transition: box-shadow 0.25s, border-color 0.25s; }
+.faq__item.open { box-shadow: var(--shadow-md); border-color: transparent; }
+.faq__q {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 22px; text-align: left; font-family: var(--font-head); font-weight: 700;
+    font-size: 1.02rem; color: var(--ink);
+}
+.faq__chev { width: 22px; height: 22px; fill: var(--navy-600); flex-shrink: 0; transition: transform 0.3s var(--ease); }
+.faq__item.open .faq__chev { transform: rotate(180deg); }
+.faq__a { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); }
+.faq__item.open .faq__a { max-height: 320px; }
+.faq__a p { padding: 0 22px 22px; color: var(--slate); font-size: 0.96rem; }
+
+/* ============================================================
    Responsive
    ============================================================ */
 @media (max-width: 992px) {
@@ -603,6 +669,8 @@ img.avatar-ph { object-fit: cover; }
     .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     .booking__grid { grid-template-columns: 1fr; }
     .booking__summary { position: static; }
+    .svc-about__grid, .svc-docproc__grid { grid-template-columns: 1fr; }
+    .svc-benefits { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {

@@ -8,7 +8,8 @@ A premium, fully responsive single-page website built for **Shashank Tax Consult
 - Sticky glass navigation + mobile slide-in menu
 - Animated stat counters (years, clients, compliance rate)
 - Scroll-reveal animations throughout
-- 8 detailed service cards (GST, Income Tax, Accounting, Company/LLP, TDS/TCS, MSME & Startup, Payroll, Advisory)
+- 8 detailed service cards (GST, Income Tax, Accounting, Company/LLP, TDS/TCS, MSME & Startup, Payroll, Advisory) — each opens its **own dedicated service page**
+- Individual service pages (`service.html?s=<slug>`) with About, Who Needs This, Why It's Important, Key Benefits, Documents Required, Process, and FAQs
 - Why-Us, How-It-Works (dark section) and testimonials sections
 - Contact form (opens email to the consultant) + full address, click-to-call & social links
 - Floating call button
@@ -45,6 +46,13 @@ Clicking any **Book Consultation** button opens a dedicated booking page with:
 
 ## 🟢 Floating action buttons
 Every page has a floating speed-dial (bottom-right) with **Call**, **WhatsApp**, and **Book a Slot** icons. Tap the main button to expand/collapse. Update the WhatsApp number by editing the `WHATSAPP` constant in `script.js` and the `wa.me/...` links in the HTML.
+
+## 🧩 Editing service pages
+All service page content lives in **`services-data.js`**. Each service has one entry
+(keyed by its slug, e.g. `gst`, `income-tax`) containing its title, tagline, about text,
+"who needs this", "why important", 6 benefits, documents checklist, 4-step process, and FAQs.
+Edit the text there and every service page updates automatically — no HTML changes needed.
+To add a new service: add an entry to `services-data.js` and link to `service.html?s=<new-slug>`.
 
 ## 🔤 Font
 The site uses **Lato** (Google Fonts). To change it, edit the `<link>` in each HTML `<head>` and the `--font-head` / `--font-body` variables in `styles.css`.

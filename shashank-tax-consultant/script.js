@@ -243,6 +243,86 @@
         }
     }
 
+    /* ---- Service detail page (service.html?s=<slug>) ---- */
+    const svcTitleEl = document.getElementById('svcTitle');
+    if (svcTitleEl && window.SERVICES) {
+        const params = new URLSearchParams(window.location.search);
+        let slug = params.get('s');
+        const data = window.SERVICES[slug];
+
+        if (!data) {
+            // Unknown/missing service — send the visitor to the services list.
+            window.location.replace('index.html#services');
+            return;
+        }
+
+        const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+
+        document.title = data.title + ' | Shashank Tax Consultant';
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', data.tagline);
+
+        set('svcCrumb', data.title);
+        set('svcTitle', data.title);
+        set('svcTagline', data.tagline);
+        set('svcAboutTitle', data.title);
+        set('svcAbout', data.about);
+        set('svcWhoNeeds', data.whoNeeds);
+        set('svcWhyImportant', data.whyImportant);
+        set('svcBenefitsTitle', 'Why Choose Our ' + data.title + ' Service');
+        set('svcCtaTitle', 'Need Professional Assistance with ' + data.title + '?');
+
+        const iconEl = document.getElementById('svcIcon');
+        if (iconEl) iconEl.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + data.icon + '"/></svg>';
+
+        // Benefits
+        const benefitsEl = document.getElementById('svcBenefits');
+        if (benefitsEl) {
+            benefitsEl.innerHTML = data.benefits.map(function (b) {
+                return '<div class="value-card"><div class="value-card__icon"><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2 9 19.2 20 8.2l-1.5-1.5z"/></svg></div>' +
+                    '<h3>' + b.t + '</h3><p>' + b.d + '</p></div>';
+            }).join('');
+        }
+
+        // Documents checklist
+        const docsEl = document.getElementById('svcDocuments');
+        if (docsEl) {
+            docsEl.innerHTML = data.documents.map(function (d) {
+                return '<li><span class="doc-tick">&#10003;</span>' + d + '</li>';
+            }).join('');
+        }
+
+        // Process steps
+        const procEl = document.getElementById('svcProcess');
+        if (procEl) {
+            procEl.innerHTML = data.process.map(function (p, i) {
+                var n = ('0' + (i + 1)).slice(-2);
+                return '<div class="step-row"><span class="step-row__num">' + n + '</span>' +
+                    '<div><h3>' + p.t + '</h3><p>' + p.d + '</p></div></div>';
+            }).join('');
+        }
+
+        // FAQ accordion
+        const faqEl = document.getElementById('svcFaqs');
+        if (faqEl) {
+            faqEl.innerHTML = data.faqs.map(function (f) {
+                return '<div class="faq__item">' +
+                    '<button class="faq__q" type="button"><span>' + f.q + '</span>' +
+                    '<svg class="faq__chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>' +
+                    '<div class="faq__a"><p>' + f.a + '</p></div></div>';
+            }).join('');
+
+            faqEl.querySelectorAll('.faq__q').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var item = btn.closest('.faq__item');
+                    var open = item.classList.contains('open');
+                    faqEl.querySelectorAll('.faq__item').forEach(function (it) { it.classList.remove('open'); });
+                    if (!open) item.classList.add('open');
+                });
+            });
+        }
+    }
+
     /* ---- Footer year ---- */
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
