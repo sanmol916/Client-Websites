@@ -70,10 +70,12 @@ img{max-width:100%;display:block}
 .nav a:hover{color:var(--red)}
 .header-actions{display:flex;align-items:center;gap:12px}
 .header-call{
+  display:inline-flex;align-items:center;gap:6px;
   background:var(--red);color:#fff;font-weight:700;font-size:.85rem;
   padding:9px 16px;border-radius:30px;white-space:nowrap;transition:.2s;
 }
 .header-call:hover{background:var(--red-2)}
+.header-call .call-ic{flex-shrink:0}
 .hamburger{display:none;background:none;border:none;color:var(--ink);font-size:1.5rem;cursor:pointer}
 .nav-backdrop{display:none}
 

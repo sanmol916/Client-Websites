@@ -288,26 +288,29 @@ Please confirm my order. Thank you!`;
   // email the order details to the business inbox (no backend needed)
   sendOrderEmail(d);
 
-  // ===== Meta: Purchase event (COD order placed on form submit) =====
+  // ===== Meta events (form submitted = COD order placed) =====
+  // Fired AFTER successful form submit and BEFORE the WhatsApp step.
   if(window.rsTrack){
     const nameParts = d.name.split(/\s+/);
-    rsTrack("Purchase", {
-      userData: {
-        email: d.email,
-        phone: "91" + d.mobile,
-        firstName: nameParts[0] || "",
-        lastName: nameParts.slice(1).join(" "),
-        zip: d.pin,
-        city: d.city,
-        state: d.state,
-        country: "India",
-      },
-      customData: {
-        content_name: currentOrder.product,
-        currency: "INR",
-        value: PRODUCTS[selectedType].price,
-      },
-    });
+    const ud = {
+      email: d.email,
+      phone: "91" + d.mobile,
+      firstName: nameParts[0] || "",
+      lastName: nameParts.slice(1).join(" "),
+      zip: d.pin,
+      city: d.city,
+      state: d.state,
+      country: "India",
+    };
+    const cd = {
+      content_name: currentOrder.product,
+      currency: "INR",
+      value: PRODUCTS[selectedType].price,
+    };
+    // Lead event for the Website Leads campaign
+    rsTrack("Lead", { userData: ud, customData: cd });
+    // Purchase event (Cash on Delivery order placed)
+    rsTrack("Purchase", { userData: ud, customData: cd });
   }
 
   showStep("confirm");
